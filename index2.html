@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwfwfiw1 - 專業淺色便當盒介紹首頁</title>
+    <meta name="description" content="基於 UI/UX Pro Max 規範打造的 Apple Style 淺色便當盒個人介紹與儲存庫展示網頁。">
+    
+    <!-- Google Fonts: Outfit (幾何現代標題) & Inter (極致清晰正文) & JetBrains Mono (等寬字型) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* 設計系統變數 - 現代專業淺色 Pro Max */
+        :root {
+            --bg-canvas: #F5F5F7;        /* 經典冷灰色 (Apple 官網底色) */
+            --bg-card: #FFFFFF;          /* 純白卡片 */
+            
+            --ink-primary: #1D1D1F;      /* 深炭黑 (主文字) */
+            --ink-secondary: #6E6E73;    /* 灰黑色 (副文字) */
+            --ink-muted: #86868B;        /* 淺灰色 (輔助說明) */
+            
+            --theme-blue: #2563EB;       /* 專業 Stripe 藍 */
+            --theme-blue-hover: #1D4ED8; /* 深藍 hover */
+            --theme-blue-light: #EFF6FF; /* 淺藍漸變底 */
+            --theme-green: #10B981;      /* 成功翠綠 */
+            --theme-border: rgba(0, 0, 0, 0.08); /* 超細邊框 */
+            
+            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
+            --shadow-soft-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+            
+            --radius-card: 16px;
+            --radius-btn: 8px;
+            --radius-pill: 999px;
+            
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* 基礎重設 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--ink-primary);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            padding: 2.5rem 1.5rem;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease;
+        }
+
+        button, input, select {
+            outline: none;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* 專業 Bento Card 容器 */
+        .bento-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft);
+            padding: 2rem;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 空氣感懸停上浮 */
+        .bento-card.interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft-hover);
+        }
+
+        /* 頁面 Header */
+        header {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.5rem;
+        }
+
+        .header-logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--ink-primary);
+        }
+
+        .header-logo i {
+            color: var(--theme-blue);
+            stroke-width: 2.5px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* 專業平面高質感按鈕 */
+        .btn-action {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-btn);
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--ink-primary);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #FAFAFA;
+            border-color: rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn-action:active {
+            transform: translateY(0);
+        }
+
+        .btn-action.primary {
+            background-color: var(--theme-blue);
+            color: #FFFFFF;
+            border-color: var(--theme-blue);
+        }
+
+        .btn-action.primary:hover {
+            background-color: var(--theme-blue-hover);
+            border-color: var(--theme-blue-hover);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1.1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 950px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 左側大區塊 */
+        .main-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Bento 1: 個人資料簡介 */
+        .profile-bento {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background: linear-gradient(135deg, #FFFFFF, var(--theme-blue-light));
+        }
+
+        @media (max-width: 600px) {
+            .profile-bento {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+        }
+
+        .avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #FFFFFF;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            object-fit: cover;
+        }
+
+        .online-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--theme-green);
+            border: 3px solid #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .profile-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 600px) {
+            .profile-title-row {
+                justify-content: center;
+            }
+        }
+
+        .profile-name {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--ink-primary);
+        }
+
+        .profile-badge {
+            background-color: rgba(37, 99, 235, 0.08);
+            color: var(--theme-blue);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+        }
+
+        .profile-username {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .profile-username:hover {
+            color: var(--theme-blue);
+        }
+
+        .profile-bio {
+            color: var(--ink-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Bento 2: 儀表板核心統計 (KPIs) */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 500px) {
+            .stats-dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .kpi-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-card);
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .kpi-num {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--theme-blue);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 搜尋與篩選列 */
+        .filter-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: #EFEFEF;
+            border-radius: var(--radius-btn);
+            padding: 0.75rem 1rem;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .search-wrapper:focus-within {
+            background-color: var(--bg-card);
+            border-color: var(--theme-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .search-icon {
+            color: var(--ink-muted);
+            margin-right: 0.6rem;
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 0.95rem;
+            color: var(--ink-primary);
+        }
+
+        .search-input::placeholder {
+            color: var(--ink-muted);
+        }
+
+        .filter-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+            margin-right: 0.4rem;
+        }
+
+        .pill-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-pill);
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            border-color: rgba(0,0,0,0.15);
+            color: var(--ink-primary);
+            background-color: #FAFAFA;
+        }
+
+        .pill-btn.active {
+            background-color: var(--theme-blue);
+            color: #FFFFFF;
+            border-color: var(--theme-blue);
+        }
+
+        .pill-btn.active .lang-dot {
+            border-color: #FFFFFF;
+        }
+
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+
+        /* 儲存庫標題與排序 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding: 0 0.25rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--ink-primary);
+        }
+
+        .sort-select {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-btn);
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        /* 專案網格 */
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 精緻 SaaS 卡片 */
+        .repo-card {
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .repo-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.4rem;
+        }
+
+        .repo-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            word-break: break-all;
+            line-height: 1.2;
+        }
+
+        .repo-icon-wrap {
+            color: var(--theme-blue);
+            background-color: var(--theme-blue-light);
+            border-radius: 8px;
+            padding: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .repo-desc {
+            font-size: 0.85rem;
+            color: var(--ink-secondary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .repo-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 0.75rem;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+        }
+
+        .repo-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .btn-enter {
+            color: var(--theme-blue);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .btn-enter:hover {
+            color: var(--theme-blue-hover);
+        }
+
+        /* 右側欄：IDE 樹狀結構檔案系統與雲端預覽器 */
+        .sidebar-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 精緻文件樹 */
+        .tree-panel {
+            padding: 1.5rem;
+        }
+
+        .tree-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tree-title i {
+            color: var(--theme-blue);
+        }
+
+        .tree-list {
+            list-style: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .tree-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            color: var(--ink-secondary);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tree-item:hover {
+            background-color: #F3F4F6;
+            color: var(--ink-primary);
+        }
+
+        .tree-item.active {
+            background-color: var(--theme-blue-light);
+            color: var(--theme-blue);
+            font-weight: 600;
+            border-color: rgba(37, 99, 235, 0.1);
+        }
+
+        /* 專業文件/程式碼閱讀面板 */
+        .preview-panel {
+            background-color: #1E1E24;   /* 仿暗色程式碼高亮編輯器底色，呈現強烈專業對比 */
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft);
+            padding: 1.5rem;
+            color: #E2E8F0;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-b: 1px solid #334155;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #94A3B8;
+        }
+
+        .preview-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background-color: #2D2D34;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            border-top: 2px solid var(--theme-blue);
+            color: #FFFFFF;
+        }
+
+        .preview-content {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex-grow: 1;
+        }
+
+        .doc-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.25rem;
+        }
+
+        .doc-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #38BDF8; /* 精緻青色 */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .doc-meta span {
+            background-color: rgba(56, 189, 248, 0.08);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .doc-desc {
+            color: #94A3B8;
+            border-top: 1px solid #334155;
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .doc-badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #34D399; /* 綠色附魔字 */
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            align-self: flex-start;
+        }
+
+        /* 現代流光 Shimmer 骨架屏 */
+        .shimmer-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.5) 20%,
+                rgba(255, 255, 255, 0.6) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shimmer-animation 1.6s infinite;
+        }
+
+        @keyframes shimmer-animation {
+            100% { transform: translateX(100%); }
+        }
+
+        .shimmer-block {
+            background-color: #EFEFEF;
+            border-radius: 4px;
+            height: 1rem;
+        }
+
+        /* 載入失敗/無結果 */
+        .empty-pane {
+            grid-column: 1 / -1;
+            padding: 4rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .empty-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .empty-desc {
+            color: var(--ink-secondary);
+            font-size: 0.9rem;
+            max-width: 450px;
+            margin: 0 auto 1rem;
+        }
+
+        /* 頁尾 */
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            text-align: center;
+            border-top: 1px solid var(--theme-border);
+            padding-top: 1.5rem;
+        }
+
+        footer p {
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頁首 Header -->
+    <header>
+        <div class="header-logo">
+            <i data-lucide="layout-dashboard"></i>
+            <span>PRO PORTFOLIO</span>
+        </div>
+        <div class="header-nav">
+            <a href="index.html" class="btn-action">
+                <i data-lucide="sparkles"></i> 經典款
+            </a>
+            <a href="index1.html" class="btn-action">
+                <i data-lucide="blocks"></i> 像素款
+            </a>
+            <button class="btn-action primary" onclick="fetchGitHubData()">
+                <i data-lucide="refresh-cw" id="reload-icon"></i> 同步
+            </button>
+        </div>
+    </header>
+
+    <!-- 主體 Container -->
+    <main class="container">
+        
+        <!-- 左側主欄：個人簡介、搜尋篩選、專案網格 -->
+        <div class="main-pane">
+            
+            <!-- Bento 1: 個人資料簡介 -->
+            <div class="bento-card profile-bento" id="profile-panel">
+                <div class="avatar-wrap">
+                    <div style="width:120px; height:120px; border-radius:50%; background-color:#FAFAFA; border:2px dashed #DDD; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="loader-2" style="width:24px; height:24px; animation: spin-anim 2s infinite linear;"></i>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-badge" style="width: 100px;">載入中...</div>
+                    <div class="shimmer-block" style="width: 180px; height: 2rem; margin-top:0.4rem;"></div>
+                    <div class="shimmer-block" style="width: 100px; height: 1.2rem;"></div>
+                </div>
+            </div>
+
+            <!-- Bento 2: 儀表板核心統計 (KPIs) -->
+            <div class="stats-dashboard" id="stats-panel">
+                <div class="kpi-card"><div class="kpi-num">-</div><div class="kpi-label">倉庫數</div></div>
+                <div class="kpi-card"><div class="kpi-num">-</div><div class="kpi-label">關注者</div></div>
+                <div class="kpi-card"><div class="kpi-num">-</div><div class="kpi-label">追隨中</div></div>
+                <div class="kpi-card"><div class="kpi-num">-</div><div class="kpi-label">Gists</div></div>
+            </div>
+
+            <!-- 搜尋與篩選面板 -->
+            <div class="bento-card filter-panel">
+                <div class="search-wrapper">
+                    <i data-lucide="search" class="search-icon" style="width:18px; height:18px; stroke-width: 2.5px;"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="輸入關鍵字以即時過濾儲存庫專案..." disabled>
+                </div>
+                <div class="filter-wrapper" id="filters-container">
+                    <span class="filter-title">程式語言過濾：</span>
+                    <button class="pill-btn active" data-lang="all">全部專案</button>
+                    <!-- 動態載入程式語言 -->
+                </div>
+            </div>
+
+            <!-- 儲存庫網格卡片區 -->
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i data-lucide="git-branch" style="color:var(--theme-blue); stroke-width: 2.5px;"></i>
+                        <span>儲存庫專案目錄</span>
+                    </h2>
+                    <select id="sort-select" class="sort-select" disabled>
+                        <option value="stars">依 Star 數量降序</option>
+                        <option value="updated">依最後更新時間排序</option>
+                        <option value="name">依專案名稱 (A-Z) 排序</option>
+                    </select>
+                </div>
+
+                <div class="repo-grid" id="repo-grid" style="margin-top: 1rem;">
+                    <!-- 3 個 SaaS 流光骨架屏 -->
+                    <div class="shimmer-card">
+                        <div>
+                            <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                            <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                            <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                        </div>
+                        <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                    </div>
+                    <div class="shimmer-card">
+                        <div>
+                            <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                            <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                            <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                        </div>
+                        <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右側輔助欄：本機專案目錄樹與雲端預覽器 -->
+        <div class="sidebar-pane">
+            
+            <!-- 本機目錄專案樹 -->
+            <div class="bento-card tree-panel">
+                <h3 class="tree-title">
+                    <i data-lucide="folder-kanban"></i>
+                    <span>工作區檔案樹</span>
+                </h3>
+                <ul class="tree-list">
+                    <li>
+                        <div class="tree-item active" data-file="root">
+                            <i data-lucide="folder-git" style="width:16px; height:16px; color:var(--theme-blue);"></i>
+                            <span>Agentic-Coding (Root)</span>
+                        </div>
+                        <ul style="list-style:none; padding-left: 1.2rem; border-left: 1px dashed rgba(0,0,0,0.15); margin-left: 0.5rem;">
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:#10B981;"></i>
+                                    <span>index.html (經典款)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index1_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:#F59E0B;"></i>
+                                    <span>index1.html (像素款)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index2_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:var(--theme-blue);"></i>
+                                    <span>index2.html (本頁)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="readme_md">
+                                    <i data-lucide="file-text" style="width:14px; height:14px; color:#8B5CF6;"></i>
+                                    <span>README.md</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="skill_dir">
+                                    <i data-lucide="folder" style="width:14px; height:14px; color:var(--ink-secondary);"></i>
+                                    <span>ui-ux-pro-max-skill</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- SaaS 雲端文件預覽面板 -->
+            <div class="preview-panel" id="preview-panel">
+                <div class="preview-header">
+                    <div class="preview-tab">
+                        <i data-lucide="file-json" style="width:14px; height:14px;"></i>
+                        <span>project_root.json</span>
+                    </div>
+                    <span>READ-ONLY</span>
+                </div>
+                
+                <div class="preview-content">
+                    <h4 class="doc-title">Agentic-Coding</h4>
+                    <div class="doc-meta">
+                        <span>類型: 專案根目錄</span>
+                        <span>層級: 0 (Root)</span>
+                    </div>
+                    <span class="doc-badge">狀態: 已完美部署</span>
+                    <p class="doc-desc">
+                        本專案是您在 GitHub 上的個人核心代表儲存庫。本儲存庫旨在極致展示您的程式專案，並融合了多重頂級 UI 風格的動態展示功能。
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; <span id="year"></span> qwfwfiw1. 設計智庫支援：UI/UX PRO MAX.</p>
+    </footer>
+
+    <!-- 主控 JS 邏輯 -->
+    <script>
+        // 設定當前年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 目標 GitHub 使用者
+        const GITHUB_USERNAME = 'qwfwfiw1';
+
+        // 全域變數快取 API 資料
+        let cachedRepos = [];
+        let cachedProfile = {};
+        let activeLanguage = 'all';
+
+        // 官方語言配色 (專業淺色系配色)
+        const LANGUAGE_COLORS = {
+            'JavaScript': '#F59E0B',
+            'TypeScript': '#3B82F6',
+            'Python': '#10B981',
+            'HTML': '#EF4444',
+            'CSS': '#8B5CF6',
+            'Go': '#06B6D4',
+            'Java': '#D97706',
+            'C++': '#EC4899',
+            'C#': '#10B981',
+            'Ruby': '#DC2626',
+            'Shell': '#4B5563',
+            'Vue': '#10B981',
+            'PHP': '#6366F1',
+            'Rust': '#F97316'
+        };
+
+        // 本機目錄詳細檔案預覽快取
+        const FILE_INFO = {
+            'root': {
+                tab: 'project_root.json',
+                tabIcon: 'file-json',
+                title: 'Agentic-Coding',
+                type: '專案根目錄',
+                level: '層級: 0 (Root)',
+                badge: '狀態: 已完美部署',
+                desc: '本專案是您在 GitHub 上的個人核心代表儲存庫。裡面包含您擁有的多套個人履歷設計方案、設計 Skill 智庫以及相關的動態展示代碼資源。'
+            },
+            'index_html': {
+                tab: 'index.html',
+                tabIcon: 'file-code',
+                title: 'index.html (經典款首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: CSS3 Glassmorphism',
+                badge: '附魔: 🌌 極致透光, 霓虹光暈',
+                desc: '本專案的第一代首頁。採用高科技感毛玻璃 (Glassmorphism) 設計，融合霓虹藍紫發光邊框、流暢的平滑卡片浮動動畫，以及深色/淺色主題一鍵隨心切換功能。'
+            },
+            'index1_html': {
+                tab: 'index1.html',
+                tabIcon: 'file-code',
+                title: 'index1.html (像素款首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: 8-bit Pixel Art',
+                badge: '附魔: 🧱 經典像素, 遊戲化 HUD',
+                desc: '本專案的第二代首頁。採用經典 Minecraft（我的世界） Inventory 面板風格打造。將傳統數據轉化為紅心血條、飽食度與 XP 經驗條，充滿極客趣味！'
+            },
+            'index2_html': {
+                tab: 'index2.html',
+                tabIcon: 'file-code',
+                title: 'index2.html (專業淺色首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: Apple Style Bento Grid',
+                badge: '附魔: 💎 SaaS 儀表板, 專業極簡',
+                desc: '您目前正在瀏覽的第三代首頁。基於「淺色、專業」設計方針，整合 Outfit 與 Inter 大廠字體排版、冷灰白色背景、高雅空氣感卡片陰影，並內建了此雲端文件預覽器。'
+            },
+            'readme_md': {
+                tab: 'README.md',
+                tabIcon: 'file-text',
+                title: 'README.md',
+                type: '說明文件 (Markdown)',
+                level: '技術: 台灣繁體中文用語',
+                badge: '狀態: 已完美說明',
+                desc: '儲存庫的靈魂手冊。詳細記錄了此專案的所有開發特色、部署與啟用 Pages 服務的步驟、使用到的 UI/UX 技術體系，讓任何人來參訪都能一目了然！'
+            },
+            'skill_dir': {
+                tab: 'ui-ux-pro-max-skill',
+                tabIcon: 'folder',
+                title: 'ui-ux-pro-max-skill',
+                type: '設計智庫目錄',
+                level: '層級: 1 (Subdirectory)',
+                badge: '狀態: 設計全開',
+                desc: '從 nextlevelbuilder/ui-ux-pro-max-skill 成功克隆下來的超級設計 Skill。它是支撐我們進行前三款網頁開發的「設計靈感來源與規格資料庫」。'
+            }
+        };
+
+        // 綁定檔案樹點擊事件
+        const treeItems = document.querySelectorAll('.tree-item');
+        const previewPanel = document.getElementById('preview-panel');
+
+        treeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                treeItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                const fileKey = item.getAttribute('data-file');
+                const info = FILE_INFO[fileKey];
+
+                if (info) {
+                    previewPanel.innerHTML = `
+                        <div class="preview-header">
+                            <div class="preview-tab">
+                                <i data-lucide="${info.tabIcon}" style="width:14px; height:14px;"></i>
+                                <span>${info.tab}</span>
+                            </div>
+                            <span>READ-ONLY</span>
+                        </div>
+                        
+                        <div class="preview-content">
+                            <h4 class="doc-title">${info.title}</h4>
+                            <div class="doc-meta">
+                                <span>類型: ${info.type}</span>
+                                <span>${info.level}</span>
+                            </div>
+                            <span class="doc-badge">${info.badge}</span>
+                            <p class="doc-desc">${info.desc}</p>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            });
+        });
+
+        // 初始化載入 GitHub 資料
+        async function fetchGitHubData() {
+            showSkeletons();
+            const reloadIcon = document.getElementById('reload-icon');
+            if (reloadIcon) reloadIcon.classList.add('spin-anim');
+
+            try {
+                // 1. 同步獲取 Profile 和 Repos
+                const [profileRes, reposRes] = await Promise.all([
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
+                ]);
+
+                if (!profileRes.ok || !reposRes.ok) {
+                    throw new Error('無法獲取 API 資料，可能已達 API Rate Limit，請稍候重試！');
+                }
+
+                cachedProfile = await profileRes.json();
+                cachedRepos = await reposRes.json();
+
+                // 2. 渲染頁面
+                renderProfile(cachedProfile);
+                renderRepos();
+                renderLanguageFilters();
+
+                // 3. 啟用搜尋輸入框與排序選單
+                document.getElementById('search-input').removeAttribute('disabled');
+                document.getElementById('sort-select').removeAttribute('disabled');
+
+            } catch (error) {
+                console.error(error);
+                renderError(error.message);
+            } finally {
+                if (reloadIcon) reloadIcon.classList.remove('spin-anim');
+            }
+        }
+
+        // 顯示骨架屏
+        function showSkeletons() {
+            document.getElementById('repo-grid').innerHTML = Array(3).fill(`
+                <div class="shimmer-card">
+                    <div>
+                        <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                        <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                        <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                    </div>
+                    <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染個人資料與 KPI 數字
+        function renderProfile(profile) {
+            const profilePanel = document.getElementById('profile-panel');
+            
+            profilePanel.innerHTML = `
+                <div class="avatar-wrap">
+                    <img src="${profile.avatar_url}" alt="${profile.name || profile.login}" class="avatar-img">
+                    <div class="online-dot" title="線上活動中"></div>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-title-row">
+                        <h1 class="profile-name">${profile.name || profile.login}</h1>
+                        <span class="profile-badge">PRO DEVELOPER</span>
+                    </div>
+                    <a href="${profile.html_url}" target="_blank" class="profile-username">
+                        <i data-lucide="github" style="width:16px; height:16px; stroke-width: 2.5px;"></i>
+                        <span>@${profile.login}</span>
+                    </a>
+                    <p class="profile-bio">${profile.bio || '專業軟體工程師，致力於打造極致 UI/UX 網頁體驗。'}</p>
+                </div>
+            `;
+
+            // 統計 KPI
+            const statsPanel = document.getElementById('stats-panel');
+            statsPanel.innerHTML = `
+                <div class="kpi-card"><div class="kpi-num">${profile.public_repos}</div><div class="kpi-label">倉庫數</div></div>
+                <div class="kpi-card"><div class="kpi-num">${profile.followers}</div><div class="kpi-label">關注者</div></div>
+                <div class="kpi-card"><div class="kpi-num">${profile.following}</div><div class="kpi-label">追隨中</div></div>
+                <div class="kpi-card"><div class="kpi-num">${profile.public_gists}</div><div class="kpi-label">Gists</div></div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        // 渲染過濾程式語言按鈕
+        function renderLanguageFilters() {
+            const filtersContainer = document.getElementById('filters-container');
+            
+            // 統計語言
+            const languages = new Set();
+            cachedRepos.forEach(repo => {
+                if (repo.language) {
+                    languages.add(repo.language);
+                }
+            });
+
+            // 重置
+            filtersContainer.innerHTML = `<span class="filter-title">程式語言過濾：</span>
+                <button class="pill-btn active" data-lang="all">全部專案</button>`;
+
+            // 動態加入
+            languages.forEach(lang => {
+                const color = LANGUAGE_COLORS[lang] || '#6B7280';
+                const btn = document.createElement('button');
+                btn.className = 'pill-btn';
+                btn.setAttribute('data-lang', lang);
+                btn.innerHTML = `<span class="lang-dot" style="background-color: ${color}"></span>${lang}`;
+                filtersContainer.appendChild(btn);
+            });
+
+            // 點擊事件
+            const buttons = filtersContainer.querySelectorAll('.pill-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeLanguage = btn.getAttribute('data-lang');
+                    renderRepos();
+                });
+            });
+        }
+
+        // 渲染儲存庫網格卡片
+        function renderRepos() {
+            const repoGrid = document.getElementById('repo-grid');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const sortVal = document.getElementById('sort-select').value;
+
+            // 1. 篩選
+            let filteredRepos = cachedRepos.filter(repo => {
+                const matchesLanguage = activeLanguage === 'all' || repo.language === activeLanguage;
+                const matchesSearch = repo.name.toLowerCase().includes(searchVal) || 
+                                     (repo.description && repo.description.toLowerCase().includes(searchVal));
+                return matchesLanguage && matchesSearch;
+            });
+
+            // 2. 排序
+            if (sortVal === 'stars') {
+                filteredRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+            } else if (sortVal === 'updated') {
+                filteredRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+            } else if (sortVal === 'name') {
+                filteredRepos.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            // 3. 渲染
+            if (filteredRepos.length === 0) {
+                repoGrid.innerHTML = `
+                    <div class="empty-pane">
+                        <i data-lucide="search-code" style="width:48px; height:48px; color:var(--ink-muted);"></i>
+                        <h3 class="empty-title">檢索無結果</h3>
+                        <p class="empty-desc">沒有找到任何與關鍵字或程式語言過濾條件相符的專案儲存庫，請重新過濾！</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            repoGrid.innerHTML = '';
+            filteredRepos.forEach(repo => {
+                const color = LANGUAGE_COLORS[repo.language] || '#9CA3AF';
+                const card = document.createElement('article');
+                card.className = 'bento-card repo-card interactive';
+
+                card.innerHTML = `
+                    <div class="repo-top">
+                        <div class="repo-header">
+                            <h3 class="repo-name">${repo.name}</h3>
+                            <div class="repo-icon-wrap">
+                                <i data-lucide="folder" style="width:16px; height:16px; stroke-width: 2.5px;"></i>
+                            </div>
+                        </div>
+                        <p class="repo-desc" title="${repo.description || '這個專案尚未提供詳細的說明與描述。'}">
+                            ${repo.description || '這個專案尚未提供詳細的說明與描述。'}
+                        </p>
+                    </div>
+                    <div class="repo-bottom">
+                        <div class="repo-meta">
+                            ${repo.language ? `
+                                <div class="repo-meta-item">
+                                    <span class="lang-dot" style="background-color: ${color}"></span>
+                                    <span>${repo.language}</span>
+                                </div>
+                            ` : ''}
+                            <div class="repo-meta-item" title="${repo.stargazers_count} Stars">
+                                <i data-lucide="star" style="width:14px; height:14px;"></i>
+                                <span>${repo.stargazers_count}</span>
+                            </div>
+                        </div>
+                        <a href="${repo.html_url}" target="_blank" class="btn-enter">
+                            <span>瀏覽專案</span>
+                            <i data-lucide="arrow-up-right" style="width:14px; height:14px; stroke-width:3px;"></i>
+                        </a>
+                    </div>
+                `;
+                repoGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // 渲染 API 錯誤訊息頁面
+        function renderError(message) {
+            const container = document.querySelector('main');
+            container.innerHTML = `
+                <div class="bento-card empty-pane" style="max-width: 800px; margin: 2rem auto;">
+                    <i data-lucide="alert-circle" style="width: 56px; height: 56px; color:#EF4444;"></i>
+                    <h2 class="empty-title" style="font-size:1.5rem;">無法串接 GitHub 服務</h2>
+                    <p class="empty-desc">
+                        ${message}<br><br>
+                        如果您遭遇了 GitHub 官方 API 存取頻率限制，請稍候重試。您可以直接透過下方按鈕進入 GitHub 首頁。
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap:wrap;">
+                        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="btn-action primary" style="padding: 0.6rem 1.5rem;">
+                            <i data-lucide="github"></i>造訪 GitHub
+                        </a>
+                        <button class="btn-action" onclick="location.reload()" style="padding: 0.6rem 1.5rem;">
+                            <i data-lucide="refresh-cw"></i>重新嘗試
+                        </button>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // 旋轉動畫定義
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `@keyframes spin-anim { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } .spin-anim { display: inline-block; animation: spin-anim 2s infinite linear; }`;
+        document.getElementsByTagName('head')[0].appendChild(style);
+
+        // 綁定事件監聽器
+        document.getElementById('search-input').addEventListener('input', renderRepos);
+        document.getElementById('sort-select').addEventListener('change', renderRepos);
+
+        // 啟動執行
+        fetchGitHubData();
+    </script>
+</body>
+</html>
