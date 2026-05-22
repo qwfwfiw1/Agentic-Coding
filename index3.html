@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwfwfiw1 - Supabase 資料庫動態介紹首頁</title>
+    <meta name="description" content="基於 UI/UX Pro Max 規範打造的 Supabase 綠黑科技風個人介紹與儲存庫展示網頁，資料直連 Supabase 資料庫動態載入。">
+    
+    <!-- Google Fonts: Outfit (標題) & Inter (正文) & JetBrains Mono (等寬字型) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Supabase JS Client SDK -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* 設計系統變數 - Supabase 科技綠黑 Pro Max */
+        :root {
+            --bg-canvas: #0c0c0d;        /* 極致深灰黑 */
+            --bg-card: #171719;          /* 卡片深灰黑 */
+            --bg-card-hover: #1e1e22;    /* 卡片懸停亮灰 */
+            
+            --ink-primary: #EDEDEF;      /* 珍珠白 (主文字) */
+            --ink-secondary: #9CA3AF;    /* 淺灰 (副文字) */
+            --ink-muted: #6B7280;        /* 深灰 (輔助) */
+            
+            --sb-green: #3ECF8E;         /* 經典 Supabase 綠 */
+            --sb-green-hover: #30b378;   /* 綠色 hover */
+            --sb-green-light: rgba(62, 207, 142, 0.1); /* 淺綠底 */
+            --sb-border: rgba(255, 255, 255, 0.08); /* 柔和暗邊框 */
+            
+            --shadow-neon: 0 0 20px rgba(62, 207, 142, 0.03), 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-neon-hover: 0 0 30px rgba(62, 207, 142, 0.12), 0 8px 30px rgba(0,0,0,0.6);
+            
+            --radius-card: 12px;
+            --radius-btn: 6px;
+            --radius-pill: 999px;
+            
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* 基礎重設 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--ink-primary);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            padding: 2.5rem 1.5rem;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        button, input, select {
+            outline: none;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* 科技便當盒卡片 */
+        .bento-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-neon);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 綠色螢光霓虹懸停效果 */
+        .bento-card.interactive:hover {
+            transform: translateY(-4px);
+            border-color: rgba(62, 207, 142, 0.4);
+            box-shadow: var(--shadow-neon-hover);
+        }
+
+        /* 頁面 Header */
+        header {
+            max-width: 1200px;
+            margin: 0 auto 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo i {
+            color: var(--sb-green);
+            stroke-width: 2.5px;
+        }
+
+        .header-logo span {
+            background: linear-gradient(120deg, #FFFFFF, var(--sb-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        /* 專業科技綠按鈕 */
+        .btn-action {
+            background-color: var(--bg-card);
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-btn);
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--ink-primary);
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background-color: var(--bg-card-hover);
+            border-color: rgba(62, 207, 142, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn-action:active {
+            transform: translateY(0);
+        }
+
+        .btn-action.primary {
+            background-color: var(--sb-green);
+            color: #0c0c0d;
+            border-color: var(--sb-green);
+            font-weight: 700;
+        }
+
+        .btn-action.primary:hover {
+            background-color: var(--sb-green-hover);
+            border-color: var(--sb-green-hover);
+            box-shadow: 0 0 15px rgba(62, 207, 142, 0.3);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1.1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 950px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 左側主欄 */
+        .main-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Bento 1: Supabase 資料庫狀態面板 */
+        .db-status-bento {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-card), rgba(62, 207, 142, 0.05));
+            border-left: 5px solid var(--sb-green);
+        }
+
+        @media (max-width: 600px) {
+            .db-status-bento {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+        }
+
+        .db-icon-wrap {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(62, 207, 142, 0.08);
+            border: 2px solid rgba(62, 207, 142, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sb-green);
+            flex-shrink: 0;
+            animation: db-pulse 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes db-pulse {
+            0% { box-shadow: 0 0 5px rgba(62, 207, 142, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(62, 207, 142, 0.5); }
+        }
+
+        .db-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .db-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 600px) {
+            .db-badge-row {
+                justify-content: center;
+            }
+        }
+
+        .db-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
+        }
+
+        .db-badge {
+            background-color: var(--sb-green-light);
+            color: var(--sb-green);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-pill);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            border: 1px solid rgba(62, 207, 142, 0.15);
+        }
+
+        .db-meta {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--ink-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .db-meta:hover {
+            color: var(--sb-green);
+        }
+
+        .db-desc {
+            color: var(--ink-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 搜尋與篩選列 */
+        .filter-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: #212124;
+            border-radius: var(--radius-btn);
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--sb-border);
+            transition: all 0.2s ease;
+        }
+
+        .search-wrapper:focus-within {
+            background-color: var(--bg-card);
+            border-color: var(--sb-green);
+            box-shadow: 0 0 12px rgba(62, 207, 142, 0.1);
+        }
+
+        .search-icon {
+            color: var(--ink-muted);
+            margin-right: 0.6rem;
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 0.95rem;
+            color: var(--ink-primary);
+            background: none;
+            border: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--ink-muted);
+        }
+
+        .filter-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+            margin-right: 0.4rem;
+        }
+
+        .pill-btn {
+            background-color: #212124;
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-pill);
+            padding: 0.35rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            border-color: rgba(62, 207, 142, 0.2);
+            color: var(--ink-primary);
+            background-color: var(--bg-card-hover);
+        }
+
+        .pill-btn.active {
+            background-color: var(--sb-green-light);
+            color: var(--sb-green);
+            border-color: var(--sb-green);
+        }
+
+        .pill-btn.active .lang-dot {
+            border-color: var(--sb-green);
+        }
+
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+        }
+
+        /* 儲存庫標題與排序 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding: 0 0.25rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #FFFFFF;
+        }
+
+        .sort-select {
+            background-color: #212124;
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-btn);
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sort-select:hover {
+            border-color: rgba(62, 207, 142, 0.2);
+        }
+
+        .sort-select option {
+            background-color: var(--bg-card);
+            color: var(--ink-primary);
+        }
+
+        /* 專案網格 */
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 科技暗黑卡片 */
+        .repo-card {
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .repo-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.4rem;
+        }
+
+        .repo-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            word-break: break-all;
+            line-height: 1.2;
+        }
+
+        .repo-icon-wrap {
+            color: var(--sb-green);
+            background-color: rgba(62, 207, 142, 0.06);
+            border: 1px solid rgba(62, 207, 142, 0.15);
+            border-radius: 6px;
+            padding: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .repo-desc {
+            font-size: 0.85rem;
+            color: var(--ink-secondary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .repo-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 0.75rem;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+        }
+
+        .repo-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .btn-enter {
+            color: var(--sb-green);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .btn-enter:hover {
+            color: #FFFFFF;
+            text-shadow: 0 0 10px rgba(62, 207, 142, 0.4);
+        }
+
+        /* 右側輔助欄：工作區檔案樹與資料庫 SQL 查詢器 */
+        .sidebar-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 精緻文件樹 */
+        .tree-panel {
+            padding: 1.5rem;
+        }
+
+        .tree-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tree-title i {
+            color: var(--sb-green);
+        }
+
+        .tree-list {
+            list-style: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .tree-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            color: var(--ink-secondary);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tree-item:hover {
+            background-color: #212124;
+            color: #FFFFFF;
+        }
+
+        .tree-item.active {
+            background-color: var(--sb-green-light);
+            color: var(--sb-green);
+            font-weight: 600;
+            border-color: rgba(62, 207, 142, 0.15);
+        }
+
+        /* SQL 查詢預覽面板 */
+        .preview-panel {
+            background-color: #0f0f11;
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-neon);
+            padding: 1.5rem;
+            color: #E2E8F0;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+        }
+
+        .preview-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background-color: #1c1c1f;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            border-top: 2px solid var(--sb-green);
+            color: #FFFFFF;
+            border-left: 1px solid var(--sb-border);
+            border-right: 1px solid var(--sb-border);
+        }
+
+        .preview-content {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex-grow: 1;
+        }
+
+        .doc-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.25rem;
+        }
+
+        .doc-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #38BDF8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .doc-meta span {
+            background-color: rgba(56, 189, 248, 0.08);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .doc-desc {
+            color: var(--ink-secondary);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .doc-badge {
+            background-color: var(--sb-green-light);
+            color: var(--sb-green);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            align-self: flex-start;
+            border: 1px solid rgba(62, 207, 142, 0.15);
+        }
+
+        /* 綠黑流光 Shimmer 骨架屏 */
+        .shimmer-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--sb-border);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(62, 207, 142, 0) 0%,
+                rgba(62, 207, 142, 0.04) 20%,
+                rgba(62, 207, 142, 0.08) 60%,
+                rgba(62, 207, 142, 0) 100%
+            );
+            animation: shimmer-animation 1.6s infinite;
+        }
+
+        @keyframes shimmer-animation {
+            100% { transform: translateX(100%); }
+        }
+
+        .shimmer-block {
+            background-color: #212124;
+            border-radius: 4px;
+            height: 1rem;
+        }
+
+        /* 載入失敗/無結果 */
+        .empty-pane {
+            grid-column: 1 / -1;
+            padding: 4rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .empty-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .empty-desc {
+            color: var(--ink-secondary);
+            font-size: 0.9rem;
+            max-width: 450px;
+            margin: 0 auto 1rem;
+        }
+
+        /* 頁尾 */
+        footer {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            text-align: center;
+            border-top: 1px solid var(--sb-border);
+            padding-top: 1.5rem;
+        }
+
+        footer p {
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頁首 Header -->
+    <header>
+        <div class="header-logo">
+            <i data-lucide="database"></i>
+            <span>SUPABASE PORTFOLIO</span>
+        </div>
+        <div class="header-nav">
+            <a href="index.html" class="btn-action">
+                <i data-lucide="sparkles"></i> 經典款
+            </a>
+            <a href="index1.html" class="btn-action">
+                <i data-lucide="blocks"></i> 像素款
+            </a>
+            <a href="index2.html" class="btn-action">
+                <i data-lucide="layout"></i> 專業款
+            </a>
+            <button class="btn-action primary" onclick="fetchSupabaseData()">
+                <i data-lucide="refresh-cw" id="reload-icon"></i> 刷新資料
+            </button>
+        </div>
+    </header>
+
+    <!-- 主體 Container -->
+    <main class="container">
+        
+        <!-- 左側主欄：Supabase 儀表板、搜尋過濾、儲存庫網格 -->
+        <div class="main-pane">
+            
+            <!-- Bento 1: Supabase 連線狀態面板 -->
+            <div class="bento-card db-status-bento" id="status-panel">
+                <div class="db-icon-wrap">
+                    <i data-lucide="loader-2" style="width:32px; height:32px; animation: spin-anim 2s infinite linear;"></i>
+                </div>
+                <div class="db-info">
+                    <div class="db-badge-row">
+                        <h1 class="db-title">正在建立資料庫連線...</h1>
+                        <span class="db-badge" style="background-color:rgba(239, 68, 68, 0.1); color:#EF4444; border-color:rgba(239,68,68,0.2);">
+                            <i data-lucide="circle-dot"></i>離線
+                        </span>
+                    </div>
+                    <div class="shimmer-block" style="width: 250px; height: 1.2rem; margin-top: 0.5rem;"></div>
+                </div>
+            </div>
+
+            <!-- 搜尋與過濾面板 -->
+            <div class="bento-card filter-panel">
+                <div class="search-wrapper">
+                    <i data-lucide="search" class="search-icon" style="width:18px; height:18px; stroke-width: 2.5px;"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="動態檢索 Supabase 中的儲存庫..." disabled>
+                </div>
+                <div class="filter-wrapper" id="filters-container">
+                    <span class="filter-title">程式語言過濾：</span>
+                    <button class="pill-btn active" data-lang="all">全部專案</button>
+                    <!-- 動態載入程式語言 -->
+                </div>
+            </div>
+
+            <!-- 儲存庫網格區 -->
+            <div>
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i data-lucide="git-fork" style="color:var(--sb-green); stroke-width: 2.5px;"></i>
+                        <span>動態資料庫專案</span>
+                    </h2>
+                    <select id="sort-select" class="sort-select" disabled>
+                        <option value="stars">依 Star 數量排序</option>
+                        <option value="updated">依最後更新時間排序</option>
+                        <option value="name">依專案名稱排序</option>
+                    </select>
+                </div>
+
+                <div class="repo-grid" id="repo-grid" style="margin-top: 1rem;">
+                    <!-- 3 個 Supabase Shimmer 骨架屏 -->
+                    <div class="shimmer-card">
+                        <div>
+                            <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                            <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                            <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                        </div>
+                        <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                    </div>
+                    <div class="shimmer-card">
+                        <div>
+                            <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                            <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                            <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                        </div>
+                        <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右側欄：本機目錄與 SQL 預覽 -->
+        <div class="sidebar-pane">
+            
+            <!-- 本機目錄檔案樹 -->
+            <div class="bento-card tree-panel">
+                <h3 class="tree-title">
+                    <i data-lucide="folder-git-2"></i>
+                    <span>工作區檔案樹</span>
+                </h3>
+                <ul class="tree-list">
+                    <li>
+                        <div class="tree-item active" data-file="root">
+                            <i data-lucide="folder" style="width:16px; height:16px; color:var(--sb-green);"></i>
+                            <span>Agentic-Coding (Root)</span>
+                        </div>
+                        <ul style="list-style:none; padding-left: 1.2rem; border-left: 1px dashed rgba(255,255,255,0.1); margin-left: 0.5rem;">
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:#a8a8a8;"></i>
+                                    <span>index.html (經典款)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index1_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:#F59E0B;"></i>
+                                    <span>index1.html (像素款)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index2_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:#38BDF8;"></i>
+                                    <span>index2.html (專業款)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="index3_html">
+                                    <i data-lucide="file-code" style="width:14px; height:14px; color:var(--sb-green);"></i>
+                                    <span>index3.html (本頁)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="sync_script">
+                                    <i data-lucide="file-terminal" style="width:14px; height:14px; color:var(--sb-green);"></i>
+                                    <span>sync_to_supabase.ps1</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.35rem;">
+                                <div class="tree-item" data-file="readme_md">
+                                    <i data-lucide="file-text" style="width:14px; height:14px; color:#8B5CF6;"></i>
+                                    <span>README.md</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- SQL 預覽面板 -->
+            <div class="preview-panel" id="preview-panel">
+                <div class="preview-header">
+                    <div class="preview-tab">
+                        <i data-lucide="database" style="width:14px; height:14px;"></i>
+                        <span>repositories.sql</span>
+                    </div>
+                    <span>LIVE_DB</span>
+                </div>
+                
+                <div class="preview-content">
+                    <h4 class="doc-title">repositories 資料表</h4>
+                    <div class="doc-meta">
+                        <span>類型: Supabase Table</span>
+                        <span>RLS: 已啟用 (SELECT Allowed)</span>
+                    </div>
+                    <span class="doc-badge">狀態: 資料庫已連線</span>
+                    <p class="doc-desc">
+                        本資料表託管於 Supabase 資料庫中。前端會直接透過 Supabase JS Client 發送 REST API 請求，無須任何中介後端，實現超高效率的專案動態讀取！
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; <span id="year"></span> qwfwfiw1. 設計智庫支援：UI/UX PRO MAX.</p>
+    </footer>
+
+    <!-- 主控 JS 邏輯 -->
+    <script>
+        // 設定當前年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Supabase 公開連線金鑰 (安全，因 anon key 只有 SELECT 權限且已啟用 RLS)
+        const SUPABASE_URL = "https://teyhxndyhoeyclmfsmig.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleWh4bmR5aG9leWNsbWZzbWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0MzE4MzYsImV4cCI6MjA5NTAwNzgzNn0.QZqLvDbe0o-CsXgPgaHNt4sm2noIYQO2EgMnOKWyE0A";
+
+        // 初始化 Supabase Client
+        let sbClient = null;
+        try {
+            sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (e) {
+            console.error("無法初始化 Supabase 客戶端:", e);
+        }
+
+        // 全域變數快取資料
+        let cachedRepos = [];
+        let activeLanguage = 'all';
+
+        // 官方語言配色 (Supabase 暗黑風格的高亮配色)
+        const LANGUAGE_COLORS = {
+            'JavaScript': '#F59E0B',
+            'TypeScript': '#3B82F6',
+            'Python': '#10B981',
+            'HTML': '#EF4444',
+            'CSS': '#8B5CF6',
+            'Go': '#06B6D4',
+            'Java': '#D97706',
+            'C++': '#EC4899',
+            'C#': '#10B981',
+            'Ruby': '#DC2626',
+            'Shell': '#6B7280',
+            'Vue': '#10B981',
+            'PHP': '#6366F1',
+            'Rust': '#F97316'
+        };
+
+        // 本機目錄詳細檔案預覽快取
+        const FILE_INFO = {
+            'root': {
+                tab: 'repositories.sql',
+                tabIcon: 'database',
+                title: 'repositories 資料表',
+                type: 'Supabase Table',
+                level: 'RLS: 已啟用 (SELECT Allowed)',
+                badge: '狀態: 資料庫已連線',
+                desc: '本資料表託管於 Supabase 資料庫中。前端會直接透過 Supabase JS Client 發送 REST API 請求，無須任何中介後端，實現超高效率的專案動態讀取！'
+            },
+            'index_html': {
+                tab: 'index.html',
+                tabIcon: 'file-code',
+                title: 'index.html (經典款首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: CSS3 Glassmorphism',
+                badge: '風格: 🌌 毛玻璃霓虹邊框',
+                desc: '本專案的第一代首頁。採用高科技感毛玻璃 (Glassmorphism) 設計，融合霓虹藍紫發光邊框、流暢的平滑卡片浮動動畫，以及深色/淺色主題一鍵隨心切換功能。'
+            },
+            'index1_html': {
+                tab: 'index1.html',
+                tabIcon: 'file-code',
+                title: 'index1.html (像素款首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: 8-bit Pixel Art',
+                badge: '風格: 🧱 Minecraft 像素風',
+                desc: '本專案的第二代首頁。採用經典 Minecraft（我的世界） Inventory 面板風格打造。將傳統數據轉化為紅心血條、飽食度與 XP 經驗條，充滿極客趣味！'
+            },
+            'index2_html': {
+                tab: 'index2.html',
+                tabIcon: 'file-code',
+                title: 'index2.html (專業淺色首頁)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: Apple Style Bento Grid',
+                badge: '風格: 💎 淺色大氣, 極簡瑞士',
+                desc: '本專案的第三代首頁。基於「淺色、專業」設計方針，整合 Outfit 與 Inter 大廠字體排版、冷灰白色背景、高雅空氣感卡片陰影，並內建了雲端文件預覽器。'
+            },
+            'index3_html': {
+                tab: 'index3.html',
+                tabIcon: 'file-code',
+                title: 'index3.html (資料庫直連版)',
+                type: '網頁首頁檔案 (HTML5)',
+                level: '技術: Supabase JS Client',
+                badge: '風格: ⚡ 暗黑科技, Supabase 綠',
+                desc: '您目前正在瀏覽的第四代首頁。採用 Supabase 綠黑配色，透過 CDN 異步引入 Supabase SDK，前端直接與 Supabase 資料表交互，繞過 GitHub API 限制，動態查詢並顯示儲存庫！'
+            },
+            'sync_script': {
+                tab: 'sync_to_supabase.ps1',
+                tabIcon: 'file-terminal',
+                title: 'sync_to_supabase.ps1 (同步腳本)',
+                type: 'PowerShell 自動化腳本',
+                level: '技術: 原生 Windows PowerShell',
+                badge: '狀態: 100% 免安裝依賴',
+                desc: '資料庫資料同步的靈魂鑰匙。讀取本地 .env 取得 Service Role Key，從 GitHub API 抓取您的全部儲存庫，並以 REST Upsert 機制將資料無痛存入 Supabase！'
+            },
+            'readme_md': {
+                tab: 'README.md',
+                tabIcon: 'file-text',
+                title: 'README.md',
+                type: '說明文件 (Markdown)',
+                level: '技術: 台灣繁體中文用語',
+                badge: '狀態: 已完美說明',
+                desc: '儲存庫的靈魂手冊。詳細記錄了此專案的所有開發特色、部署與啟用 Pages 服務的步驟、使用到的 UI/UX 技術體系，讓任何人來參訪都能一目了然！'
+            }
+        };
+
+        // 綁定檔案樹點擊事件
+        const treeItems = document.querySelectorAll('.tree-item');
+        const previewPanel = document.getElementById('preview-panel');
+
+        treeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                treeItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                const fileKey = item.getAttribute('data-file');
+                const info = FILE_INFO[fileKey];
+
+                if (info) {
+                    previewPanel.innerHTML = `
+                        <div class="preview-header">
+                            <div class="preview-tab">
+                                <i data-lucide="${info.tabIcon}" style="width:14px; height:14px;"></i>
+                                <span>${info.tab}</span>
+                            </div>
+                            <span>LIVE_DB</span>
+                        </div>
+                        
+                        <div class="preview-content">
+                            <h4 class="doc-title">${info.title}</h4>
+                            <div class="doc-meta">
+                                <span>類型: ${info.type}</span>
+                                <span>${info.level}</span>
+                            </div>
+                            <span class="doc-badge">${info.badge}</span>
+                            <p class="doc-desc">${info.desc}</p>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }
+            });
+        });
+
+        // 核心資料庫動態載入
+        async function fetchSupabaseData() {
+            showSkeletons();
+            const reloadIcon = document.getElementById('reload-icon');
+            if (reloadIcon) reloadIcon.classList.add('spin-anim');
+
+            try {
+                if (!sbClient) {
+                    throw new Error("Supabase 客戶端未正常初始化。");
+                }
+
+                // 從 Supabase 的 repositories 資料表讀取所有欄位
+                const { data, error } = await sbClient
+                    .from('repositories')
+                    .select('*');
+
+                if (error) {
+                    throw error;
+                }
+
+                cachedRepos = data || [];
+
+                // 2. 渲染首頁連線狀態與 KPI
+                renderStatus(true, cachedRepos.length);
+                
+                // 3. 渲染過濾器與專案網格
+                renderLanguageFilters();
+                renderRepos();
+
+                // 4. 啟用過濾與搜尋
+                document.getElementById('search-input').removeAttribute('disabled');
+                document.getElementById('sort-select').removeAttribute('disabled');
+
+            } catch (err) {
+                console.error("Supabase 查詢錯誤:", err);
+                renderStatus(false, 0, err.message);
+                renderError(err.message);
+            } finally {
+                if (reloadIcon) reloadIcon.classList.remove('spin-anim');
+            }
+        }
+
+        // 顯示骨架屏
+        function showSkeletons() {
+            document.getElementById('repo-grid').innerHTML = Array(3).fill(`
+                <div class="shimmer-card">
+                    <div>
+                        <div class="shimmer-block" style="width: 60%; height: 1.2rem;"></div>
+                        <div class="shimmer-block" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                        <div class="shimmer-block" style="width: 90%; height: 0.9rem; margin-top: 0.4rem;"></div>
+                    </div>
+                    <div class="shimmer-block" style="width: 100px; height: 1rem;"></div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染 Supabase 連線狀態
+        function renderStatus(isOnline, repoCount, errMsg = "") {
+            const statusPanel = document.getElementById('status-panel');
+            
+            if (isOnline) {
+                statusPanel.innerHTML = `
+                    <div class="db-icon-wrap" style="color:var(--sb-green); border-color:var(--sb-green);">
+                        <i data-lucide="database-zap" style="width:36px; height:36px; stroke-width: 2px;"></i>
+                    </div>
+                    <div class="db-info">
+                        <div class="db-badge-row">
+                            <h1 class="db-title">Supabase 資料庫直連成功</h1>
+                            <span class="db-badge">
+                                <i data-lucide="shield-check" style="width:12px; height:12px; stroke-width: 3px;"></i>安全線上
+                            </span>
+                        </div>
+                        <p class="db-desc" style="color:var(--ink-secondary); font-size:0.95rem; margin-top:0.25rem;">
+                            目前已透過 Supabase Restful SDK 動態讀取到 <strong style="color:var(--sb-green); font-family:var(--font-mono);">${repoCount}</strong> 個公開儲存庫專案資料！
+                        </p>
+                    </div>
+                `;
+            } else {
+                statusPanel.innerHTML = `
+                    <div class="db-icon-wrap" style="color:#EF4444; border-color:#EF4444; background-color:rgba(239,68,68,0.08);">
+                        <i data-lucide="database-backup" style="width:36px; height:36px;"></i>
+                    </div>
+                    <div class="db-info">
+                        <div class="db-badge-row">
+                            <h1 class="db-title" style="color:#EF4444;">資料庫連線失敗</h1>
+                            <span class="db-badge" style="background-color:rgba(239, 68, 68, 0.1); color:#EF4444; border-color:rgba(239,68,68,0.2);">
+                                <i data-lucide="circle-dot"></i>離線
+                            </span>
+                        </div>
+                        <p class="db-desc" style="color:#EF4444; font-size:0.95rem; margin-top:0.25rem; font-family:var(--font-mono);">
+                            錯誤代碼: ${errMsg}
+                        </p>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // 渲染過濾程式語言按鈕
+        function renderLanguageFilters() {
+            const filtersContainer = document.getElementById('filters-container');
+            
+            // 統計語言
+            const languages = new Set();
+            cachedRepos.forEach(repo => {
+                if (repo.language) {
+                    languages.add(repo.language);
+                }
+            });
+
+            // 重置
+            filtersContainer.innerHTML = `<span class="filter-title">程式語言過濾：</span>
+                <button class="pill-btn active" data-lang="all">全部專案</button>`;
+
+            // 動態加入
+            languages.forEach(lang => {
+                const color = LANGUAGE_COLORS[lang] || '#6B7280';
+                const btn = document.createElement('button');
+                btn.className = 'pill-btn';
+                btn.setAttribute('data-lang', lang);
+                btn.innerHTML = `<span class="lang-dot" style="background-color: ${color}"></span>${lang}`;
+                filtersContainer.appendChild(btn);
+            });
+
+            // 點擊事件
+            const buttons = filtersContainer.querySelectorAll('.pill-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeLanguage = btn.getAttribute('data-lang');
+                    renderRepos();
+                });
+            });
+        }
+
+        // 渲染儲存庫網格卡片
+        function renderRepos() {
+            const repoGrid = document.getElementById('repo-grid');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const sortVal = document.getElementById('sort-select').value;
+
+            // 1. 篩選
+            let filteredRepos = cachedRepos.filter(repo => {
+                const matchesLanguage = activeLanguage === 'all' || repo.language === activeLanguage;
+                const matchesSearch = repo.name.toLowerCase().includes(searchVal) || 
+                                     (repo.description && repo.description.toLowerCase().includes(searchVal));
+                return matchesLanguage && matchesSearch;
+            });
+
+            // 2. 排序
+            if (sortVal === 'stars') {
+                filteredRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+            } else if (sortVal === 'updated') {
+                filteredRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+            } else if (sortVal === 'name') {
+                filteredRepos.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            // 3. 渲染
+            if (filteredRepos.length === 0) {
+                repoGrid.innerHTML = `
+                    <div class="empty-pane">
+                        <i data-lucide="database-backup" style="width:48px; height:48px; color:var(--ink-muted);"></i>
+                        <h3 class="empty-title">資料庫無相符項目</h3>
+                        <p class="empty-desc">沒有在 Supabase 內檢索到任何與關鍵字或程式語言條件相符的資料庫物件！</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            repoGrid.innerHTML = '';
+            filteredRepos.forEach(repo => {
+                const color = LANGUAGE_COLORS[repo.language] || '#9CA3AF';
+                const card = document.createElement('article');
+                card.className = 'bento-card repo-card interactive';
+
+                card.innerHTML = `
+                    <div class="repo-top">
+                        <div class="repo-header">
+                            <h3 class="repo-name">${repo.name}</h3>
+                            <div class="repo-icon-wrap">
+                                <i data-lucide="database-zap" style="width:16px; height:16px; stroke-width: 2.5px;"></i>
+                            </div>
+                        </div>
+                        <p class="repo-desc" title="${repo.description || '這個專案尚未提供詳細的資料庫欄位描述。'}">
+                            ${repo.description || '這個專案尚未提供詳細的資料庫欄位描述。'}
+                        </p>
+                    </div>
+                    <div class="repo-bottom">
+                        <div class="repo-meta">
+                            ${repo.language ? `
+                                <div class="repo-meta-item">
+                                    <span class="lang-dot" style="background-color: ${color}"></span>
+                                    <span>${repo.language}</span>
+                                </div>
+                            ` : ''}
+                            <div class="repo-meta-item" title="${repo.stargazers_count} Stars">
+                                <i data-lucide="star" style="width:14px; height:14px; fill:var(--sb-green); color:var(--sb-green);"></i>
+                                <span>${repo.stargazers_count}</span>
+                            </div>
+                        </div>
+                        <a href="${repo.html_url}" target="_blank" class="btn-enter">
+                            <span>開啟</span>
+                            <i data-lucide="arrow-up-right" style="width:14px; height:14px; stroke-width:3px;"></i>
+                        </a>
+                    </div>
+                `;
+                repoGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // 渲染 API 錯誤訊息頁面
+        function renderError(message) {
+            const repoGrid = document.getElementById('repo-grid');
+            repoGrid.innerHTML = `
+                <div class="empty-pane">
+                    <i data-lucide="alert-circle" style="width: 56px; height: 56px; color:#EF4444;"></i>
+                    <h2 class="empty-title" style="font-size:1.5rem; color:#EF4444;">直連資料表錯誤</h2>
+                    <p class="empty-desc" style="font-family:var(--font-mono);">
+                        ${message}
+                    </p>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // 旋轉與發光動畫定義
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `@keyframes spin-anim { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } .spin-anim { display: inline-block; animation: spin-anim 2s infinite linear; }`;
+        document.getElementsByTagName('head')[0].appendChild(style);
+
+        // 綁定事件監聽器
+        document.getElementById('search-input').addEventListener('input', renderRepos);
+        document.getElementById('sort-select').addEventListener('change', renderRepos);
+
+        // 啟動執行
+        fetchSupabaseData();
+    </script>
+</body>
+</html>

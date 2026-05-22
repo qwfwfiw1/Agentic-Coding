@@ -1,0 +1,14 @@
+# 敏感環境變數
+.env
+token.evn
+
+# 虛擬環境與快取
+.venv/
+__pycache__/
+*.pyc
+
+# 臨時媒體與測試檔案
+.tempmediaStorage/
+*.png
+*.webp
+*.video
