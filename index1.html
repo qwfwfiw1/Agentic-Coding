@@ -3,53 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qwfwfiw1 - UI/UX Pro Max 介紹首頁</title>
-    <meta name="description" content="基於 UI/UX Pro Max 新粗獷主義便當盒設計規範的個人儲存庫與專案介紹首頁。">
-    <!-- Google Fonts: Space Grotesk (極致粗獷主義字型) -->
+    <title>qwfwfiw1 - MINECRAFT 像素風介紹首頁</title>
+    <meta name="description" content="基於 UI/UX Pro Max 規範打造的 Minecraft 像素風個人介紹與儲存庫展示網頁。">
+    
+    <!-- Google Fonts: Press Start 2P (大標題) & VT323 (極佳中英文像素正文字體) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* 設計系統變數 - 新粗獷主義 Neo-Brutalism Pro Max */
+        /* 設計系統變數 - Minecraft 經典像素風 */
         :root {
-            --bg-canvas: #FFFDF5;        /* 經典奶油白 */
-            --ink: #000000;             /* 純黑 */
-            --white: #FFFFFF;           /* 純白 */
+            --mc-dirt: #3a271c;          /* 泥土深褐 */
+            --mc-stone: #2e2e2e;         /* 石頭深灰 */
+            --mc-panel-bg: #c6c6c6;      /* 經典 Inventory 背包灰色底 */
+            --mc-panel-dark: #555555;    /* 背包立體暗邊 */
+            --mc-panel-light: #ffffff;   /* 背包立體亮邊 */
             
-            /* 高飽和度配色 */
-            --accent-purple: #C4B5FD;    /* 柔紫色 */
-            --accent-yellow: #FFD93D;    /* 亮黃色 */
-            --accent-red: #FF6B6B;       /* 亮紅色 */
-            --accent-teal: #86CCCA;      /* 藍綠色 */
-            --accent-orange: #FFA366;    /* 亮橘色 */
+            --mc-green: #5c8e32;         /* 草地綠 */
+            --mc-xp-green: #3bff09;      /* XP 經驗條綠色 */
+            --mc-yellow: #ffff55;        /* 經典黃色字 */
+            --mc-gold: #ffaa00;          /* 金黃色 */
+            --mc-purple: #aa00aa;        /* 紫色（用於 Tooltip 框與附魔） */
             
-            --border-thick: 4px solid #000000;
-            --border-thin: 2px solid #000000;
-            --shadow-offset: 8px 8px 0px 0px #000000;
-            --shadow-offset-sm: 4px 4px 0px 0px #000000;
+            --border-pixel: 4px solid #000000;
+            --border-pixel-thin: 2px solid #000000;
             
-            --radius-box: 0px;           /* 粗獷主義特徵：零圓角或極銳利直角 */
-            --radius-pill: 999px;        /* 用於標籤徽章 */
-        }
-
-        /* 淺深色主題適應 (新粗獷主義的深色模式通常是高對比 Hacker 風格或逆轉配色) */
-        [data-theme="dark"] {
-            --bg-canvas: #0A0A0A;        /* 純黑底 */
-            --ink: #FFFFFF;             /* 純白 */
-            --white: #121212;           /* 深灰 */
-            
-            --accent-purple: #7C3AED;    /* 深紫 */
-            --accent-yellow: #D97706;    /* 深黃 */
-            --accent-red: #DC2626;       /* 深紅 */
-            --accent-teal: #0D9488;      /* 深藍綠 */
-            --accent-orange: #EA580C;    /* 深橘 */
-            
-            --border-thick: 4px solid #FFFFFF;
-            --border-thin: 2px solid #FFFFFF;
-            --shadow-offset: 8px 8px 0px 0px #FFFFFF;
-            --shadow-offset-sm: 4px 4px 0px 0px #FFFFFF;
+            --font-display: 'Press Start 2P', monospace;
+            --font-body: 'VT323', monospace;
         }
 
         /* 基礎重設 */
@@ -57,611 +40,634 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Space Grotesk', -apple-system, sans-serif;
-            color: var(--ink);
+            image-rendering: pixelated; /* 強化像素圖片的顆粒感 */
         }
 
         body {
-            background-color: var(--bg-canvas);
+            background-color: var(--mc-stone);
+            /* 石磚紋理 background-pattern */
+            background-image: 
+                linear-gradient(90deg, rgba(0,0,0,0.15) 2px, transparent 2px),
+                linear-gradient(rgba(0,0,0,0.15) 2px, transparent 2px);
+            background-size: 32px 32px;
+            color: #000000;
+            font-family: var(--font-body);
+            font-size: 24px; /* VT323 字型需要較大尺寸 */
+            padding: 2rem 1rem;
             min-height: 100vh;
-            padding: 2rem;
-            line-height: 1.4;
-            transition: background-color 0.3s ease;
         }
 
         a {
             text-decoration: none;
+            color: inherit;
         }
 
         button, input, select {
             outline: none;
             background: none;
             border: none;
+            font-family: inherit;
         }
 
-        /* 頁面頂部 Header */
+        /* Minecraft 經典立體面板 (Inventory Card) */
+        .mc-panel {
+            background-color: var(--mc-panel-bg);
+            border: var(--border-pixel);
+            box-shadow: 
+                inset 4px 4px 0px var(--mc-panel-light), 
+                inset -4px -4px 0px var(--mc-panel-dark);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        /* Minecraft 經典按鈕 */
+        .mc-btn {
+            background-color: #9c9c9c;
+            border: 2px solid #000000;
+            box-shadow: 
+                inset 2px 2px 0px #ffffff, 
+                inset -2px -2px 0px #555555;
+            padding: 0.5rem 1.5rem;
+            color: #e0e0e0;
+            text-shadow: 2px 2px 0px #222222;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-align: center;
+            user-select: none;
+        }
+
+        .mc-btn:hover {
+            background-color: #b8b8b8;
+            color: var(--mc-yellow);
+            border-color: #000000;
+        }
+
+        .mc-btn:active {
+            box-shadow: 
+                inset -2px -2px 0px #ffffff, 
+                inset 2px 2px 0px #555555;
+            padding: 0.6rem 1.4rem 0.4rem 1.6rem; /* 模擬按壓位移 */
+        }
+
+        .mc-btn.active {
+            background-color: #4a4a4a;
+            color: var(--mc-xp-green);
+            box-shadow: inset -2px -2px 0px #ffffff, inset 2px 2px 0px #111111;
+        }
+
+        /* 頁面 Header */
         header {
             max-width: 1200px;
             margin: 0 auto 2.5rem;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            border: var(--border-thick);
-            background-color: var(--white);
-            padding: 1.25rem 2rem;
-            box-shadow: var(--shadow-offset);
+            position: relative;
         }
 
-        .header-logo {
-            font-size: 1.8rem;
-            font-weight: 900;
+        /* Minecraft 泥土與草地邊框 Banner */
+        .mc-banner {
+            width: 100%;
+            border: var(--border-pixel);
+            background-color: var(--mc-dirt);
+            /* 草地頂層 */
+            border-top: 12px solid var(--mc-green);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0px 8px 0px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .mc-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: #ffffff;
+            text-shadow: 4px 4px 0px #3f3f3f;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: -1px;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
         }
 
-        .header-logo i {
-            stroke-width: 3px;
+        /* 經典黃色 Splash Text 動畫 */
+        .mc-splash {
+            position: absolute;
+            right: 10%;
+            bottom: -15px;
+            font-family: var(--font-body);
+            font-size: 2rem;
+            color: var(--mc-yellow);
+            text-shadow: 3px 3px 0px #555500;
+            transform: rotate(-15deg);
+            animation: mc-splash-bounce 0.5s infinite alternate ease-in-out;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
         }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        @keyframes mc-splash-bounce {
+            0% { transform: rotate(-15deg) scale(1); }
+            100% { transform: rotate(-15deg) scale(1.15); }
         }
 
-        .btn-theme {
-            border: var(--border-thin);
-            background-color: var(--accent-yellow);
-            padding: 0.6rem;
-            cursor: pointer;
+        /* 導覽按鈕區 */
+        .header-nav {
+            margin-top: 1.5rem;
             display: flex;
-            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
             justify-content: center;
-            box-shadow: var(--shadow-offset-sm);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
-
-        .btn-theme:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px 0px var(--ink);
-        }
-
-        .btn-theme:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px 0px var(--ink);
+            flex-wrap: wrap;
         }
 
         /* 主容器 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
-        }
-
-        /* Bento Grid 佈局 */
-        .bento-grid-top {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
         }
 
         @media (max-width: 900px) {
-            .bento-grid-top {
+            .container {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Bento 卡片通用樣式 */
-        .bento-card {
-            border: var(--border-thick);
-            background-color: var(--white);
-            box-shadow: var(--shadow-offset);
-            padding: 2.5rem;
-            position: relative;
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Pro Max 懸停動畫：Mechanical Press 機械按壓效果 */
-        .bento-card.interactive:hover {
-            transform: translate(8px, 8px);
-            box-shadow: 0px 0px 0px 0px var(--ink);
-        }
-
-        /* Bento 1: 個人資料卡片 (紫底) */
-        .profile-bento {
-            background-color: var(--accent-purple);
+        /* 左側主面板 */
+        .main-content {
             display: flex;
+            flex-direction: column;
             gap: 2rem;
+        }
+
+        /* 裝備欄風格個人資料 (Character Inventory Grid) */
+        .inventory-profile {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 1.5rem;
             align-items: center;
         }
 
-        @media (max-width: 600px) {
-            .profile-bento {
-                flex-direction: column;
+        @media (max-width: 500px) {
+            .inventory-profile {
+                grid-template-columns: 1fr;
                 text-align: center;
-                padding: 2rem 1.5rem;
+                justify-items: center;
             }
         }
 
-        .avatar-frame {
-            border: var(--border-thick);
-            box-shadow: var(--shadow-offset-sm);
-            background-color: var(--white);
-            flex-shrink: 0;
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
+        /* 經典物品格子樣式 */
+        .mc-slot {
+            width: 130px;
+            height: 130px;
+            background-color: #8b8b8b;
+            border: 4px solid #373737;
+            box-shadow: 
+                inset 4px 4px 0px #555555, 
+                inset -4px -4px 0px #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .avatar-img {
-            width: 100%;
-            height: 100%;
+            width: 110px;
+            height: 110px;
             object-fit: cover;
+            border: var(--border-pixel-thin);
         }
 
-        .profile-details {
+        .profile-info {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .profile-badge {
-            background-color: var(--accent-yellow);
-            border: var(--border-thin);
-            padding: 0.2rem 0.8rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-block;
-            align-self: flex-start;
-            box-shadow: var(--shadow-offset-sm);
-        }
-
-        @media (max-width: 600px) {
-            .profile-badge {
-                align-self: center;
-            }
+            gap: 0.5rem;
         }
 
         .profile-name {
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            text-transform: uppercase;
-            line-height: 1.1;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #3c3c3c;
+            text-shadow: 1px 1px 0px #ffffff;
         }
 
         .profile-username {
-            font-size: 1.1rem;
+            color: var(--mc-dirt);
             font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            border-bottom: 2px solid var(--ink);
+            gap: 0.3rem;
+            border-bottom: 2px dashed var(--mc-dirt);
             align-self: flex-start;
-            padding-bottom: 0.1rem;
-        }
-
-        @media (max-width: 600px) {
-            .profile-username {
-                align-self: center;
-            }
         }
 
         .profile-bio {
-            font-size: 1.05rem;
-            font-weight: 500;
-            line-height: 1.4;
+            background-color: #8b8b8b;
+            border: 3px solid #373737;
+            box-shadow: inset 3px 3px 0px #555555, inset -3px -3px 0px #ffffff;
+            padding: 0.75rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #222222;
+            font-size: 1.15rem;
+            line-height: 1.3;
         }
 
-        /* Bento 2: 統計數據卡片 (黃底) */
-        .stats-bento {
-            background-color: var(--accent-yellow);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            padding: 2rem;
-        }
-
-        .stat-box {
-            background-color: var(--white);
-            border: var(--border-thin);
-            padding: 1rem;
+        /* Minecraft HUD 心形血條、飽食度與 XP Bar */
+        .hud-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-offset-sm);
-            text-align: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            background-color: #8b8b8b;
+            border: 3px solid #373737;
+            box-shadow: inset 3px 3px 0px #555555, inset -3px -3px 0px #ffffff;
+            padding: 1rem;
         }
 
-        .stat-num {
-            font-size: 2.2rem;
+        .hud-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .hud-label {
             font-weight: 900;
-            letter-spacing: -1px;
-            line-height: 1;
-            margin-bottom: 0.25rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #222222;
+            font-size: 1.1rem;
+            min-width: 120px;
         }
 
-        .stat-txt {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Bento 3: 搜尋與過濾區塊 (紅底) */
-        .filter-bento {
-            background-color: var(--accent-red);
-            padding: 2.5rem;
+        .hud-icons {
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            gap: 0.2rem;
         }
 
-        .search-row {
-            display: flex;
-            border: var(--border-thick);
-            background-color: var(--white);
-            box-shadow: var(--shadow-offset-sm);
+        .hud-heart {
+            color: #ff2222;
+            text-shadow: 2px 2px 0px #000;
+            animation: pulse-heart 1s infinite alternate;
         }
 
-        .search-icon-box {
-            background-color: var(--accent-orange);
-            border-right: var(--border-thick);
-            padding: 1rem;
+        @keyframes pulse-heart {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .hud-wheat {
+            color: var(--mc-gold);
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        /* XP 經驗條 */
+        .xp-bar-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .xp-bar-bg {
+            flex-grow: 1;
+            height: 14px;
+            background-color: #434343;
+            border: 2px solid #000;
+            position: relative;
+        }
+
+        .xp-bar-fill {
+            height: 10px;
+            background-color: var(--mc-xp-green);
+            width: 0%; /* 動態設定 */
+            transition: width 0.8s ease-out;
+        }
+
+        .xp-level {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--mc-xp-green);
+            text-shadow: 2px 2px 0px #000000;
+            line-height: 1;
+        }
+
+        /* 搜尋與篩選 */
+        .search-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            border: var(--border-pixel-thin);
+            background-color: #8b8b8b;
+            box-shadow: inset 3px 3px 0px #555555, inset -3px -3px 0px #ffffff;
+            padding: 0.5rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            background-color: transparent;
+            padding: 0.5rem;
+            font-size: 1.3rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #222222;
         }
 
         .search-input::placeholder {
-            color: rgba(0, 0, 0, 0.4);
+            color: #cccccc;
         }
 
-        [data-theme="dark"] .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .filter-row {
+        .lang-filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 0.6rem;
             align-items: center;
         }
 
-        .filter-label {
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            background-color: var(--white);
-            border: var(--border-thin);
-            padding: 0.4rem 0.8rem;
-            box-shadow: var(--shadow-offset-sm);
-        }
-
-        .pill-btn {
-            background-color: var(--white);
-            border: var(--border-thin);
-            padding: 0.4rem 1rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: var(--shadow-offset-sm);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
-
-        .pill-btn:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 3px 3px 0px 0px var(--ink);
-        }
-
-        .pill-btn.active {
-            background-color: var(--ink);
-            color: var(--bg-canvas);
-            box-shadow: none;
-            transform: translate(4px, 4px);
-        }
-
-        .pill-btn.active .lang-color-circle {
-            border-color: var(--bg-canvas);
-        }
-
-        .lang-color-circle {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 1px solid var(--ink);
-            display: inline-block;
-        }
-
-        /* 標題與排序列 */
-        .section-bar {
+        /* 儲存庫網格 */
+        .repo-title-bar {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: #3c3c3c;
+            text-shadow: 1px 1px 0px #fff;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: var(--border-thick);
-            background-color: var(--accent-teal);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow-offset);
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .sort-select-box {
-            border: var(--border-thin);
-            background-color: var(--white);
-            padding: 0.5rem 1rem;
-            font-weight: 700;
+        .sort-select {
+            background-color: #9c9c9c;
+            border: 2px solid #000;
+            box-shadow: inset 2px 2px 0px #fff, inset -2px -2px 0px #555;
+            padding: 0.3rem 1rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #222;
             cursor: pointer;
-            box-shadow: var(--shadow-offset-sm);
+            font-size: 1.1rem;
         }
 
-        /* 專案網格 */
+        .sort-select option {
+            background-color: #555;
+            color: #fff;
+        }
+
         .repo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
 
-        @media (max-width: 500px) {
-            .repo-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* 儲存庫卡片 - 新粗獷主義風格 */
+        /* Minecraft 儲存庫卡片 */
         .repo-card {
-            background-color: var(--white);
-            border: var(--border-thick);
-            box-shadow: var(--shadow-offset);
-            padding: 2rem;
+            background-color: #dfdfdf;
+            border: var(--border-pixel-thin);
+            box-shadow: inset 3px 3px 0px #ffffff, inset -3px -3px 0px #9e9e9e, 0px 6px 0px rgba(0,0,0,0.25);
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 250px;
-            position: relative;
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 240px;
+            transition: transform 0.1s ease;
         }
 
-        /* 懸停時 Mechanical Press 按壓下沉效果 */
         .repo-card:hover {
-            transform: translate(8px, 8px);
-            box-shadow: 0px 0px 0px 0px var(--ink);
-        }
-
-        .repo-top {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .repo-title-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.5rem;
+            transform: translateY(-4px);
+            box-shadow: inset 3px 3px 0px #ffffff, inset -3px -3px 0px #9e9e9e, 0px 10px 0px rgba(0,0,0,0.25);
         }
 
         .repo-name {
-            font-size: 1.4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            word-break: break-all;
-            line-height: 1.1;
-        }
-
-        .repo-icon-wrap {
-            background-color: var(--accent-purple);
-            border: var(--border-thin);
-            padding: 0.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .repo-description {
+            font-family: var(--font-display);
             font-size: 0.95rem;
-            font-weight: 500;
-            line-height: 1.4;
+            color: #111111;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
+            line-height: 1.2;
+        }
+
+        .repo-desc {
+            font-size: 1.1rem;
+            color: #333333;
+            line-height: 1.2;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            margin-bottom: 0.5rem;
         }
 
         .repo-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1rem;
-            border-top: var(--border-thin);
-            padding-top: 1rem;
+            border-top: 2px dashed #999;
+            padding-top: 0.75rem;
         }
 
         .repo-meta {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.85rem;
+            gap: 0.8rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
         .repo-meta-item {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.2rem;
         }
 
         .repo-meta-item i {
-            width: 14px;
-            height: 14px;
-            stroke-width: 2.5px;
+            width: 16px;
+            height: 16px;
         }
 
-        .repo-btn {
-            background-color: var(--accent-orange);
-            border: var(--border-thin);
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            box-shadow: var(--shadow-offset-sm);
+        .lang-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            display: inline-block;
+        }
+
+        /* 右側欄：本機專案目錄樹與 Tooltip 介紹 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 樹狀圖面板 */
+        .tree-panel {
+            background-color: #1b120c; /* 暗色泥土 */
+            border: var(--border-pixel);
+            box-shadow: inset 4px 4px 0px #5e3f2b, inset -4px -4px 0px #000000;
+            padding: 1.5rem;
+            color: #aaccff;
+            text-shadow: 2px 2px 0px #111;
+        }
+
+        .tree-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--mc-yellow);
+            margin-bottom: 1.25rem;
+            text-align: center;
+            border-bottom: 4px double var(--mc-yellow);
+            padding-bottom: 0.5rem;
+        }
+
+        .tree-list {
+            list-style: none;
+            font-size: 1.15rem;
+            line-height: 1.5;
+        }
+
+        .tree-item {
             display: flex;
             align-items: center;
-            gap: 0.3rem;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            gap: 0.4rem;
+            cursor: pointer;
+            padding: 0.2rem 0.4rem;
+            border: 2px solid transparent;
+            user-select: none;
         }
 
-        .repo-card:hover .repo-btn {
-            background-color: var(--accent-yellow);
+        .tree-item:hover {
+            background-color: rgba(255,255,255,0.08);
+            border-color: rgba(255, 255, 85, 0.4);
+            color: var(--mc-yellow);
         }
 
-        .repo-btn:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 3px 3px 0px 0px var(--ink);
+        .tree-item.active {
+            background-color: rgba(255, 255, 85, 0.15);
+            border-color: var(--mc-yellow);
+            color: var(--mc-yellow);
         }
 
-        /* 新粗獷主義骨架屏 (Dotted Striped Skeleton) */
-        .skeleton-card {
-            background-image: repeating-linear-gradient(
-                -45deg,
-                rgba(0, 0, 0, 0.05),
-                rgba(0, 0, 0, 0.05) 10px,
-                transparent 10px,
-                transparent 20px
-            );
-            background-color: var(--white);
-            border: var(--border-thick);
-            border-style: dashed;
-            padding: 2rem;
-            height: 250px;
+        /* Minecraft 經典物品說明提示框 (Minecraft Item Tooltip) */
+        .mc-tooltip {
+            background-color: rgba(16, 1, 16, 0.95);
+            border: 3px solid #2e0854;
+            box-shadow: 
+                inset 2px 2px 0px #4e0f80, 
+                inset -2px -2px 0px #1a0330;
+            padding: 1.25rem;
+            color: #ffffff;
+            font-size: 1.15rem;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-height: 200px;
+        }
+
+        .tooltip-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--mc-yellow); /* 傳奇物品黃色 */
+            margin-bottom: 0.25rem;
+        }
+
+        .tooltip-type {
+            color: #55ffff; /* 稀有類型青色 */
+            font-weight: 700;
+        }
+
+        .tooltip-desc {
+            color: #a8a8a8; /* 普通灰色描述 */
+            border-top: 2px dashed #373737;
+            padding-top: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .tooltip-accent {
+            color: #ff55ff; /* 紫色附魔特效文字 */
+            font-style: italic;
+        }
+
+        .tooltip-lore {
+            color: #55ff55; /* 綠色屬性 */
+        }
+
+        /* 經典像素骨架屏 (Bedrock Dotted Striped Skeleton) */
+        .mc-skeleton {
+            background-color: #8b8b8b;
+            border: 4px dashed #333333;
+            box-shadow: inset 4px 4px 0px #555555;
+            height: 240px;
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            animation: skeleton-jump 1.5s infinite ease-in-out;
+            animation: mc-skeleton-fade 1s infinite alternate ease-in-out;
         }
 
-        [data-theme="dark"] .skeleton-card {
-            background-image: repeating-linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.05),
-                rgba(255, 255, 255, 0.05) 10px,
-                transparent 10px,
-                transparent 20px
-            );
+        @keyframes mc-skeleton-fade {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
 
-        @keyframes skeleton-jump {
-            0%, 100% {
-                transform: translate(0, 0);
-                box-shadow: var(--shadow-offset);
-            }
-            50% {
-                transform: translate(4px, 4px);
-                box-shadow: 4px 4px 0px 0px var(--ink);
-            }
-        }
-
-        .skeleton-line {
-            background-color: var(--ink);
-            opacity: 0.15;
-            height: 1.2rem;
+        .skeleton-block {
+            background-color: rgba(0,0,0,0.2);
+            height: 1.5rem;
             margin-bottom: 0.5rem;
         }
 
-        /* 錯誤訊息 / 無結果 */
-        .card-empty {
+        /* 空倉庫 / 載入失敗 */
+        .mc-empty {
             grid-column: 1 / -1;
-            border: var(--border-thick);
-            background-color: var(--accent-purple);
-            padding: 4rem 2rem;
+            background-color: var(--mc-panel-bg);
+            border: var(--border-pixel);
+            box-shadow: inset 4px 4px 0px var(--mc-panel-light), inset -4px -4px 0px var(--mc-panel-dark);
+            padding: 3rem 2rem;
             text-align: center;
-            box-shadow: var(--shadow-offset);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
-        .card-empty-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .card-empty-desc {
-            font-size: 1.1rem;
-            font-weight: 500;
-            max-width: 500px;
+        .mc-empty-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: #aa0000;
+            text-shadow: 2px 2px 0px #000;
         }
 
         /* 頁尾 */
         footer {
             max-width: 1200px;
-            margin: 2rem auto 0;
-            border: var(--border-thick);
-            background-color: var(--white);
-            padding: 2rem;
+            margin: 3rem auto 0;
             text-align: center;
-            box-shadow: var(--shadow-offset);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
             align-items: center;
+            gap: 1rem;
         }
 
         footer p {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.95rem;
+            color: #a8a8a8;
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 0px #000000;
         }
 
-        .btn-reload {
-            background-color: var(--accent-teal);
-            border: var(--border-thin);
-            padding: 0.5rem 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: var(--shadow-offset-sm);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
+        .spin {
+            display: inline-block;
+            animation: spin-anim 2s infinite linear;
         }
-
-        .btn-reload:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 3px 3px 0px 0px var(--ink);
+        @keyframes spin-anim {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -669,17 +675,20 @@
 
     <!-- 頁首 Header -->
     <header>
-        <div class="header-logo">
-            <i data-lucide="layout-grid"></i>
-            <span>PRO MAX PORTFOLIO</span>
+        <div class="mc-banner">
+            <h1 class="mc-title">AGENTIC-CODING</h1>
+            <p style="color: var(--mc-yellow); text-shadow: 2px 2px 0px #222; font-size: 1.3rem; font-weight:700;">
+                MINECRAFT PIXEL ART EDITION
+            </p>
+            <div class="mc-splash">§eWOW! VERY PIXELATED!§f</div>
         </div>
-        <div class="header-controls">
-            <!-- 舊版/新版切換按鈕 -->
-            <a href="index.html" class="btn-theme" style="background-color: var(--accent-purple); font-weight:900; font-size:0.85rem; text-transform:uppercase; display:flex; align-items:center; gap:0.3rem;" title="切換回經典毛玻璃網頁">
-                <i data-lucide="sparkles" style="width:14px; height:14px;"></i> 經典版
+
+        <div class="header-nav">
+            <a href="index.html" class="mc-btn">
+                <i data-lucide="sparkles"></i> 切換經典毛玻璃版
             </a>
-            <button class="btn-theme" id="theme-btn" title="切換新粗獷高對比主題">
-                <i data-lucide="moon" id="theme-icon"></i>
+            <button class="mc-btn" onclick="fetchGitHubData()">
+                <i data-lucide="refresh-cw" id="reload-icon"></i> 刷新資料
             </button>
         </div>
     </header>
@@ -687,101 +696,160 @@
     <!-- 主體 Container -->
     <main class="container">
         
-        <!-- Bento 第一層: 個人資料 + 統計數據 -->
-        <section class="bento-grid-top">
-            <!-- Bento 1: 個人資料 (紫底) -->
-            <div class="bento-card profile-bento" id="profile-card">
-                <div class="avatar-frame">
-                    <div style="width:100%; height:100%; background-color:var(--white); border-style:dashed; border-width:2px; display:flex; align-items:center; justify-content:center;">
-                        <i data-lucide="loader-2" class="animate-spin" style="width:30px; height:30px;"></i>
+        <!-- 左側區域：個人資料、過濾器、儲存庫網格 -->
+        <div class="main-content">
+            
+            <!-- 個人裝備背包卡 (Profile Panel) -->
+            <div class="mc-panel" id="profile-panel">
+                <div class="inventory-profile">
+                    <div class="mc-slot">
+                        <i data-lucide="loader-2" class="spin" style="width:30px; height:30px;"></i>
+                    </div>
+                    <div class="profile-info">
+                        <div style="font-family: var(--font-display); font-size:1.1rem;">PLAYER LOADING...</div>
+                        <div class="skeleton-block" style="width: 150px; height: 1.2rem; margin-top:0.5rem;"></div>
+                        <div class="skeleton-block" style="width: 250px; height: 3rem;"></div>
                     </div>
                 </div>
-                <div class="profile-details">
-                    <div class="profile-badge">載入中...</div>
-                    <div class="skeleton-line" style="width: 200px; height: 2.2rem;"></div>
-                    <div class="skeleton-line" style="width: 120px;"></div>
-                    <div class="skeleton-line" style="width: 100%;"></div>
+            </div>
+
+            <!-- HUD 數據條 (Hearts, Hunger, XP Bar) -->
+            <div class="hud-container">
+                <div class="hud-row">
+                    <span class="hud-label">§c玩家血量 (粉絲)</span>
+                    <div class="hud-icons" id="hearts-bar">
+                        <!-- 紅心圖示 -->
+                        <span class="hud-heart">❤</span>
+                        <span class="hud-heart">❤</span>
+                        <span class="hud-heart">❤</span>
+                    </div>
+                </div>
+                <div class="hud-row">
+                    <span class="hud-label">§6飽食飢餓 (追隨)</span>
+                    <div class="hud-icons" id="hunger-bar">
+                        <!-- 麥穗圖示 -->
+                        <span class="hud-wheat">🌾</span>
+                        <span class="hud-wheat">🌾</span>
+                        <span class="hud-wheat">🌾</span>
+                    </div>
+                </div>
+                <div class="hud-row">
+                    <div class="xp-bar-container">
+                        <span class="hud-label">§a冒險等級 (倉庫)</span>
+                        <div class="xp-bar-bg">
+                            <div class="xp-bar-fill" id="xp-bar"></div>
+                        </div>
+                        <span class="xp-level" id="xp-level">0</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Bento 2: 統計數據 (黃底) -->
-            <div class="bento-card stats-bento" id="stats-card">
-                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">倉庫</span></div>
-                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">粉絲</span></div>
-                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">追隨</span></div>
-                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">GIST</span></div>
-            </div>
-        </section>
-
-        <!-- Bento 第二層: 搜尋與過濾 (紅底) -->
-        <section class="bento-card filter-bento">
-            <div class="search-row">
-                <div class="search-icon-box">
-                    <i data-lucide="search" style="stroke-width: 3px;"></i>
+            <!-- 搜尋與過濾面板 -->
+            <div class="mc-panel search-panel">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="輸入關鍵字以尋找儲存庫物品..." disabled>
                 </div>
-                <input type="text" id="search-input" class="search-input" placeholder="輸入關鍵字即時檢索儲存庫..." disabled>
+                <div class="lang-filters" id="filters-container">
+                    <button class="mc-btn active" data-lang="all">全部物品</button>
+                    <!-- 動態載入的程式語言過濾按鈕 -->
+                </div>
             </div>
+
+            <!-- 儲存庫專案網格 -->
+            <div>
+                <div class="repo-title-bar">
+                    <span>[ 儲存庫專案目錄 ]</span>
+                    <select id="sort-select" class="sort-select" disabled>
+                        <option value="stars">按 Star 數量排序</option>
+                        <option value="updated">按更新時間排序</option>
+                        <option value="name">按名稱 (A-Z) 排序</option>
+                    </select>
+                </div>
+
+                <div class="repo-grid" id="repo-grid">
+                    <!-- 3 個像素骨架屏卡片 -->
+                    <div class="mc-skeleton">
+                        <div>
+                            <div class="skeleton-block" style="width: 70%; height: 1.2rem;"></div>
+                            <div class="skeleton-block" style="width: 100%; height: 1rem; margin-top: 1rem;"></div>
+                            <div class="skeleton-block" style="width: 90%; height: 1rem;"></div>
+                        </div>
+                        <div class="skeleton-block" style="width: 80px; height: 1.2rem;"></div>
+                    </div>
+                    <div class="mc-skeleton">
+                        <div>
+                            <div class="skeleton-block" style="width: 70%; height: 1.2rem;"></div>
+                            <div class="skeleton-block" style="width: 100%; height: 1rem; margin-top: 1rem;"></div>
+                            <div class="skeleton-block" style="width: 90%; height: 1rem;"></div>
+                        </div>
+                        <div class="skeleton-block" style="width: 80px; height: 1.2rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右側區域：本機專案目錄樹與 Tooltip 互動說明 -->
+        <div class="sidebar">
             
-            <div class="filter-row" id="filters-container">
-                <span class="filter-label">篩選程式語言：</span>
-                <button class="pill-btn active" data-lang="all">全部專案</button>
-                <!-- 動態注入的程式語言按鈕 -->
+            <!-- 本機目錄專案樹 -->
+            <div class="tree-panel">
+                <h3 class="tree-title">📁 本儲存庫目錄樹</h3>
+                <ul class="tree-list">
+                    <li>
+                        <div class="tree-item active" data-file="root">
+                            <i data-lucide="folder-open" style="width:18px; height:18px; color:var(--mc-gold);"></i>
+                            <span>Agentic-Coding (工作區)</span>
+                        </div>
+                        <ul style="list-style:none; padding-left: 1.2rem;">
+                            <li style="margin-top:0.3rem;">
+                                <div class="tree-item" data-file="index_html">
+                                    <i data-lucide="file-code" style="width:16px; height:16px; color:#55ff55;"></i>
+                                    <span>index.html</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.3rem;">
+                                <div class="tree-item" data-file="index1_html">
+                                    <i data-lucide="file-code" style="width:16px; height:16px; color:var(--mc-yellow);"></i>
+                                    <span>index1.html (本頁)</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.3rem;">
+                                <div class="tree-item" data-file="readme_md">
+                                    <i data-lucide="file-text" style="width:16px; height:16px; color:#55ffff;"></i>
+                                    <span>README.md</span>
+                                </div>
+                            </li>
+                            <li style="margin-top:0.3rem;">
+                                <div class="tree-item" data-file="skill_dir">
+                                    <i data-lucide="folder" style="width:16px; height:16px; color:var(--mc-gold);"></i>
+                                    <span>ui-ux-pro-max-skill</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-        </section>
 
-        <!-- 儲存庫標題列 -->
-        <section class="section-bar">
-            <h2 class="section-title">
-                <i data-lucide="folder-git-2" style="stroke-width: 3px;"></i>
-                <span>儲存庫專案目錄</span>
-            </h2>
-            <select id="sort-select" class="sort-select-box" disabled>
-                <option value="stars">依 Star 數降序</option>
-                <option value="updated">依最後更新時間</option>
-                <option value="name">依名稱 (A-Z)</option>
-            </select>
-        </section>
+            <!-- Minecraft 經典 Tooltip 物品說明框 -->
+            <div class="mc-tooltip" id="tooltip-box">
+                <h4 class="tooltip-title">Agentic-Coding (工作區)</h4>
+                <p class="tooltip-type">§9類型: 本機專案根目錄</p>
+                <p class="tooltip-lore">§a專案狀態: 開發完備，極致優化</p>
+                <p class="tooltip-lore">§d所屬玩家: qwfwfiw1 (林沅駿)</p>
+                <div class="tooltip-desc">
+                    點擊上方目錄樹中的檔案或資料夾，可以將此物品裝備到說明欄，查閱詳細的開發細節與神級屬性附魔喔！
+                </div>
+                <div class="tooltip-accent" style="margin-top: auto;">§5✨ 點擊上方以裝備查閱 ✨</div>
+            </div>
 
-        <!-- 儲存庫網格卡片區 -->
-        <section class="repo-grid" id="repo-grid">
-            <!-- 6 個新粗獷主義骨架屏卡片 -->
-            <div class="skeleton-card">
-                <div>
-                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
-                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
-                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
-                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
-                </div>
-                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
-            </div>
-            <div class="skeleton-card">
-                <div>
-                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
-                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
-                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
-                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
-                </div>
-                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
-            </div>
-            <div class="skeleton-card">
-                <div>
-                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
-                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
-                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
-                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
-                </div>
-                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
-            </div>
-        </section>
+        </div>
 
     </main>
 
     <!-- 頁尾 -->
     <footer>
         <p>&copy; <span id="year"></span> qwfwfiw1. 設計智庫支援：UI/UX PRO MAX.</p>
-        <button class="btn-reload" onclick="fetchGitHubData()">
-            <i data-lucide="refresh-cw"></i>手動重新整理
-        </button>
     </footer>
 
     <!-- 主控 JS 邏輯 -->
@@ -797,61 +865,94 @@
         let cachedProfile = {};
         let activeLanguage = 'all';
 
-        // GitHub 官方語言色標 (高對比新粗獷風格專屬色標)
+        // GitHub 官方語言色標 (Minecraft 高對比色標)
         const LANGUAGE_COLORS = {
             'JavaScript': '#f1e05a',
             'TypeScript': '#3178c6',
             'Python': '#3572A5',
-            'HTML': '#FF6B6B',
-            'CSS': '#C4B5FD',
-            'Go': '#86CCCA',
-            'Java': '#FFA366',
-            'C++': '#FF8888',
-            'C#': '#86EFAC',
-            'Ruby': '#EF4444',
-            'Shell': '#84CC16',
-            'Vue': '#10B981',
-            'PHP': '#8B5CF6',
-            'Rust': '#F97316'
+            'HTML': '#e34c26',
+            'CSS': '#563d7c',
+            'Go': '#00ADD8',
+            'Java': '#b07219',
+            'C++': '#f34b7d',
+            'C#': '#178600',
+            'Ruby': '#701516',
+            'Shell': '#89e051',
+            'Vue': '#41b883',
+            'PHP': '#4f5d95',
+            'Rust': '#dea584'
         };
 
-        // 深淺色主題切換控制
-        const themeBtn = document.getElementById('theme-btn');
-        const themeIcon = document.getElementById('theme-icon');
-        
-        // 優先從 localStorage 取得主題，否則使用系統預設
-        const savedTheme = localStorage.getItem('theme-neobrutal');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeIcon.setAttribute('data-lucide', 'sun');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-            themeIcon.setAttribute('data-lucide', 'moon');
-        }
-        lucide.createIcons(); // 更新圖示
-
-        themeBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = 'light';
-            
-            if (currentTheme === 'light') {
-                newTheme = 'dark';
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeIcon.setAttribute('data-lucide', 'sun');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                themeIcon.setAttribute('data-lucide', 'moon');
+        // 本機目錄檔案詳細介紹快取 (Minecraft Tooltip 內容)
+        const FILE_INFO = {
+            'root': {
+                title: 'Agentic-Coding (工作區)',
+                type: '§9類型: 本機專案根目錄',
+                lore1: '§a專案狀態: 開發完備，極致優化',
+                lore2: '§d所屬玩家: qwfwfiw1 (林沅駿)',
+                desc: '本專案是您在 GitHub 上的核心介紹儲存庫本身。裡面包含您的個人履歷網頁、設計 Skill 智庫以及所有的核心程式碼資源。'
+            },
+            'index_html': {
+                title: 'index.html',
+                type: '§b類型: 🌌 經典毛玻璃首頁檔案',
+                lore1: '§a附魔屬性: 極致透光 II, HSL 漸層 IV',
+                lore2: '§e外觀特效: 霓虹發光, 一鍵切換',
+                desc: '本專案的第一代首頁。採用高科技感毛玻璃 (Glassmorphism) 設計，融合霓虹藍紫發光邊框、流暢的平滑卡片浮動動畫，以及深色/淺色主題一鍵隨心切換功能。'
+            },
+            'index1_html': {
+                title: 'index1.html',
+                type: '§a類型: 🧱 Minecraft 像素首頁檔案',
+                lore1: '§a附魔屬性: 經典像素 V, 遊戲化 HUD III',
+                lore2: '§6外觀特效: 閃爍標題, 物品說明框',
+                desc: '本專案的第二代 PRO MAX 首頁（即本網頁）。融合經典 Inventory 箱子灰色立體面板，將統計數據轉換為紅心血條、飽食度與經驗值 XP 條，並整合此互動式本機目錄瀏覽面板。'
+            },
+            'readme_md': {
+                title: 'README.md',
+                type: '§d類型: 📖 專案部署與說明文件',
+                lore1: '§a附魔屬性: 繁體中文台灣用語 III',
+                lore2: '§7物品稀有度: 普通',
+                desc: '儲存庫的靈魂之書。詳細記錄了此專案的所有開發特色、部署與啟用 Pages 服務的步驟、使用到的 UI/UX 技術體系，讓任何人來參訪都能一目了然！'
+            },
+            'skill_dir': {
+                title: 'ui-ux-pro-max-skill',
+                type: '§e類型: 🛠️ UI/UX 設計智庫儲存庫',
+                lore1: '§a附魔屬性: 設計智能 III, 資源全開 V',
+                lore2: '§c功能: 支援 67 種 UI 風格與 161 種調色盤',
+                desc: '從 nextlevelbuilder/ui-ux-pro-max-skill 成功克隆下來的超級 Skill。它是支撐我們進行經典毛玻璃網頁與 Minecraft 像素網頁開發的「設計靈感來源與規格資料庫」。'
             }
-            
-            localStorage.setItem('theme-neobrutal', newTheme);
-            lucide.createIcons(); // 更新圖示
+        };
+
+        // 綁定本機目錄樹點擊事件
+        const treeItems = document.querySelectorAll('.tree-item');
+        const tooltipBox = document.getElementById('tooltip-box');
+
+        treeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                treeItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                const fileKey = item.getAttribute('data-file');
+                const info = FILE_INFO[fileKey];
+
+                if (info) {
+                    tooltipBox.innerHTML = `
+                        <h4 class="tooltip-title">${info.title}</h4>
+                        <p class="tooltip-type">${info.type}</p>
+                        <p class="tooltip-lore">${info.lore1}</p>
+                        <p class="tooltip-lore">${info.lore2}</p>
+                        <div class="tooltip-desc">${info.desc}</div>
+                        <div class="tooltip-accent" style="margin-top: auto;">§5✨ 點擊其他以裝備查閱 ✨</div>
+                    `;
+                }
+            });
         });
 
         // 初始化載入 GitHub 資料
         async function fetchGitHubData() {
             showSkeletons();
+            const reloadIcon = document.getElementById('reload-icon');
+            if (reloadIcon) reloadIcon.classList.add('spin');
+
             try {
                 // 1. 同步獲取 Profile 和 Repos
                 const [profileRes, reposRes] = await Promise.all([
@@ -860,7 +961,7 @@
                 ]);
 
                 if (!profileRes.ok || !reposRes.ok) {
-                    throw new Error('無法獲取 API，可能已達 API rate limit，請稍候重試！');
+                    throw new Error('無法獲取 API，可能已達 API 限制，請稍候重試！');
                 }
 
                 cachedProfile = await profileRes.json();
@@ -878,51 +979,71 @@
             } catch (error) {
                 console.error(error);
                 renderError(error.message);
+            } finally {
+                if (reloadIcon) reloadIcon.classList.remove('spin');
             }
         }
 
         // 顯示骨架屏
         function showSkeletons() {
-            document.getElementById('repo-grid').innerHTML = Array(6).fill(`
-                <div class="skeleton-card">
+            document.getElementById('repo-grid').innerHTML = Array(4).fill(`
+                <div class="mc-skeleton">
                     <div>
-                        <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
-                        <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
-                        <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
-                        <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
+                        <div class="skeleton-block" style="width: 70%; height: 1.2rem;"></div>
+                        <div class="skeleton-block" style="width: 100%; height: 1rem; margin-top: 1rem;"></div>
+                        <div class="skeleton-block" style="width: 90%; height: 1rem;"></div>
                     </div>
-                    <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
+                    <div class="skeleton-block" style="width: 80px; height: 1.2rem;"></div>
                 </div>
             `).join('');
         }
 
-        // 渲染個人資料卡片
+        // 渲染個人資料與 HUD 條
         function renderProfile(profile) {
-            const profileCard = document.getElementById('profile-card');
+            const profilePanel = document.getElementById('profile-panel');
             
-            profileCard.innerHTML = `
-                <div class="avatar-frame">
-                    <img src="${profile.avatar_url}" alt="${profile.name || profile.login}" class="avatar-img">
-                </div>
-                <div class="profile-details">
-                    <div class="profile-badge">GITHUB PRO MAX</div>
-                    <h1 class="profile-name">${profile.name || profile.login}</h1>
-                    <a href="${profile.html_url}" target="_blank" class="profile-username">
-                        <i data-lucide="github" style="width:18px; height:18px; stroke-width: 3px;"></i>
-                        <span>@${profile.login}</span>
-                    </a>
-                    <p class="profile-bio">${profile.bio || '這位工程師目前沒有留下任何說明。'}</p>
+            profilePanel.innerHTML = `
+                <div class="inventory-profile">
+                    <div class="mc-slot">
+                        <img src="${profile.avatar_url}" alt="${profile.name || profile.login}" class="avatar-img">
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="profile-name">§f玩家: ${profile.name || profile.login}</h2>
+                        <a href="${profile.html_url}" target="_blank" class="profile-username">
+                            <i data-lucide="github" style="width:16px; height:16px;"></i>
+                            <span>@${profile.login}</span>
+                        </a>
+                        <div class="profile-bio">${profile.bio || '§7這位史蒂夫工程師非常低調，目前沒有留下任何成就說明。'}</div>
+                    </div>
                 </div>
             `;
 
-            // 統計數據
-            const statsCard = document.getElementById('stats-card');
-            statsCard.innerHTML = `
-                <div class="stat-box"><span class="stat-num">${profile.public_repos}</span><span class="stat-txt">倉庫</span></div>
-                <div class="stat-box"><span class="stat-num">${profile.followers}</span><span class="stat-txt">粉絲</span></div>
-                <div class="stat-box"><span class="stat-num">${profile.following}</span><span class="stat-txt">追隨</span></div>
-                <div class="stat-box"><span class="stat-num">${profile.public_gists}</span><span class="stat-txt">GIST</span></div>
-            `;
+            // 1. 動態計算並渲染 HUD 愛心 (血量粉絲數)
+            // 每個心代表 10 個粉絲，最多顯示 10 個心，最少 3 個心
+            const heartsBar = document.getElementById('hearts-bar');
+            const heartCount = Math.max(3, Math.min(10, Math.ceil(profile.followers / 10) || 3));
+            heartsBar.innerHTML = '';
+            for (let i = 0; i < heartCount; i++) {
+                heartsBar.innerHTML += `<span class="hud-heart">❤</span>`;
+            }
+
+            // 2. 動態計算並渲染 HUD 麥穗 (飢餓值追隨數)
+            const hungerBar = document.getElementById('hunger-bar');
+            const hungerCount = Math.max(3, Math.min(10, Math.ceil(profile.following / 10) || 3));
+            hungerBar.innerHTML = '';
+            for (let i = 0; i < hungerCount; i++) {
+                hungerBar.innerHTML += `<span class="hud-wheat">🌾</span>`;
+            }
+
+            // 3. 動態渲染 XP 經驗條 (倉庫數)
+            // 假設 20 個倉庫是滿值 (100%)，做百分比計算
+            const xpBar = document.getElementById('xp-bar');
+            const xpLevel = document.getElementById('xp-level');
+            const repoCount = profile.public_repos;
+            
+            xpLevel.textContent = repoCount;
+            const xpPercentage = Math.min(100, Math.max(5, (repoCount / 20) * 100));
+            xpBar.style.width = `${xpPercentage}%`;
             
             lucide.createIcons();
         }
@@ -939,33 +1060,32 @@
                 }
             });
 
-            // 清空除「全部」之外的標籤
-            filtersContainer.innerHTML = `<span class="filter-label">篩選程式語言：</span>
-                <button class="pill-btn active" data-lang="all">全部專案</button>`;
+            // 清空除「全部」之外的按鈕
+            filtersContainer.innerHTML = `<button class="mc-btn active" data-lang="all">全部物品</button>`;
 
-            // 動態添加語言標籤
+            // 動態添加語言按鈕
             languages.forEach(lang => {
                 const color = LANGUAGE_COLORS[lang] || '#000000';
                 const btn = document.createElement('button');
-                btn.className = 'pill-btn';
+                btn.className = 'mc-btn';
                 btn.setAttribute('data-lang', lang);
-                btn.innerHTML = `<span class="lang-color-circle" style="background-color: ${color}"></span>${lang}`;
+                btn.innerHTML = `<span class="lang-dot" style="background-color: ${color}"></span> ${lang}`;
                 filtersContainer.appendChild(btn);
             });
 
             // 綁定點擊事件
-            const pills = document.querySelectorAll('.pill-btn');
-            pills.forEach(pill => {
-                pill.addEventListener('click', (e) => {
-                    pills.forEach(p => p.classList.remove('active'));
-                    pill.classList.add('active');
-                    activeLanguage = pill.getAttribute('data-lang');
+            const buttons = filtersContainer.querySelectorAll('.mc-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeLanguage = btn.getAttribute('data-lang');
                     renderRepos();
                 });
             });
         }
 
-        // 渲染儲存庫網格卡片
+        // 渲染儲存庫專案網格卡片
         function renderRepos() {
             const repoGrid = document.getElementById('repo-grid');
             const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
@@ -991,10 +1111,10 @@
             // 3. 渲染 HTML
             if (filteredRepos.length === 0) {
                 repoGrid.innerHTML = `
-                    <div class="card-empty">
-                        <i data-lucide="folder-search" style="width:64px; height:64px; stroke-width: 3px;"></i>
-                        <h3 class="card-empty-title">檢索無結果</h3>
-                        <p class="card-empty-desc">沒有找到與關鍵字或程式語言相符的專案儲存庫，請變更搜尋條件！</p>
+                    <div class="mc-empty">
+                        <i data-lucide="compass" class="spin" style="width:48px; height:48px; color:var(--mc-dirt);"></i>
+                        <h3 class="mc-empty-title">§c無法找到此地圖區塊</h3>
+                        <p style="font-weight:700;">沒有發現與關鍵字或語言箱相符的儲存庫物品！</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -1002,43 +1122,34 @@
             }
 
             repoGrid.innerHTML = '';
-            filteredRepos.forEach((repo, index) => {
-                const color = LANGUAGE_COLORS[repo.language] || '#D1D5DB';
+            filteredRepos.forEach((repo) => {
+                const color = LANGUAGE_COLORS[repo.language] || '#777777';
                 const card = document.createElement('article');
                 card.className = 'repo-card';
 
                 card.innerHTML = `
-                    <div class="repo-top">
-                        <div class="repo-title-row">
-                            <h3 class="repo-name">${repo.name}</h3>
-                            <div class="repo-icon-wrap">
-                                <i data-lucide="folder" style="width:18px; height:18px; stroke-width: 3px;"></i>
-                            </div>
-                        </div>
-                        <p class="repo-description" title="${repo.description || '這個專案尚未提供詳細的說明與描述。'}">
-                            ${repo.description || '這個專案尚未提供詳細的說明與描述。'}
+                    <div>
+                        <h3 class="repo-name">${repo.name}</h3>
+                        <p class="repo-desc" title="${repo.description || '§7此物品沒有詳細的附魔描述。'}">
+                            ${repo.description || '§7此物品沒有詳細的附魔描述。'}
                         </p>
                     </div>
                     <div class="repo-bottom">
                         <div class="repo-meta">
                             ${repo.language ? `
                                 <div class="repo-meta-item">
-                                    <span class="lang-color-circle" style="background-color: ${color}"></span>
+                                    <span class="lang-dot" style="background-color: ${color}"></span>
                                     <span>${repo.language}</span>
                                 </div>
                             ` : ''}
                             <div class="repo-meta-item" title="${repo.stargazers_count} Stars">
-                                <i data-lucide="star"></i>
+                                <i data-lucide="star" style="color:var(--mc-yellow); fill:var(--mc-yellow);"></i>
                                 <span>${repo.stargazers_count}</span>
                             </div>
-                            <div class="repo-meta-item" title="${repo.forks_count} Forks">
-                                <i data-lucide="git-fork"></i>
-                                <span>${repo.forks_count}</span>
-                            </div>
                         </div>
-                        <a href="${repo.html_url}" target="_blank" class="repo-btn">
-                            <span>進入</span>
-                            <i data-lucide="arrow-up-right" style="width: 14px; height: 14px; stroke-width:3px;"></i>
+                        <a href="${repo.html_url}" target="_blank" class="mc-btn" style="font-size:16px; padding:0.25rem 0.75rem;">
+                            <span>開啟</span>
+                            <i data-lucide="arrow-up-right" style="width:14px; height:14px;"></i>
                         </a>
                     </div>
                 `;
@@ -1051,19 +1162,19 @@
         function renderError(message) {
             const container = document.querySelector('main');
             container.innerHTML = `
-                <div class="card-empty">
-                    <i data-lucide="alert-triangle" style="width: 64px; height: 64px; stroke-width: 3px;"></i>
-                    <h2 class="card-empty-title">無法獲取 API 資料</h2>
-                    <p class="card-empty-desc">
+                <div class="mc-empty">
+                    <i data-lucide="alert-triangle" style="width: 64px; height: 64px; color:#ff3333;"></i>
+                    <h2 class="mc-empty-title">§c無法與伺服器 (API) 取得連接</h2>
+                    <p style="font-weight:700; max-width:600px; margin: 0 auto 1.5rem;">
                         ${message}<br><br>
-                        如果您已經達到 GitHub API 限制，請稍候重試。或者直接造訪下方連結進入 GitHub 主頁。
+                        可能已達 GitHub API 的冷卻限制，請史蒂夫稍候再手動刷新。
                     </p>
-                    <div style="display: flex; gap: 1.5rem; justify-content: center;">
-                        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="repo-btn" style="background-color: var(--accent-yellow); font-size:1rem; padding: 0.6rem 1.5rem;">
-                            <i data-lucide="github"></i>造訪 GitHub
+                    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap:wrap;">
+                        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="mc-btn">
+                            <i data-lucide="github"></i> 進入官方 GitHub
                         </a>
-                        <button class="repo-btn" onclick="location.reload()" style="background-color: var(--accent-teal); font-size:1rem; padding: 0.6rem 1.5rem;">
-                            <i data-lucide="refresh-cw"></i>重新嘗試
+                        <button class="mc-btn" onclick="location.reload()" style="background-color:var(--mc-green); color:#fff;">
+                            <i data-lucide="refresh-cw"></i> 重新嘗試連接
                         </button>
                     </div>
                 </div>
