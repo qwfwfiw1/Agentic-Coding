@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwfwfiw1 - UI/UX Pro Max 介紹首頁</title>
+    <meta name="description" content="基於 UI/UX Pro Max 新粗獷主義便當盒設計規範的個人儲存庫與專案介紹首頁。">
+    <!-- Google Fonts: Space Grotesk (極致粗獷主義字型) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* 設計系統變數 - 新粗獷主義 Neo-Brutalism Pro Max */
+        :root {
+            --bg-canvas: #FFFDF5;        /* 經典奶油白 */
+            --ink: #000000;             /* 純黑 */
+            --white: #FFFFFF;           /* 純白 */
+            
+            /* 高飽和度配色 */
+            --accent-purple: #C4B5FD;    /* 柔紫色 */
+            --accent-yellow: #FFD93D;    /* 亮黃色 */
+            --accent-red: #FF6B6B;       /* 亮紅色 */
+            --accent-teal: #86CCCA;      /* 藍綠色 */
+            --accent-orange: #FFA366;    /* 亮橘色 */
+            
+            --border-thick: 4px solid #000000;
+            --border-thin: 2px solid #000000;
+            --shadow-offset: 8px 8px 0px 0px #000000;
+            --shadow-offset-sm: 4px 4px 0px 0px #000000;
+            
+            --radius-box: 0px;           /* 粗獷主義特徵：零圓角或極銳利直角 */
+            --radius-pill: 999px;        /* 用於標籤徽章 */
+        }
+
+        /* 淺深色主題適應 (新粗獷主義的深色模式通常是高對比 Hacker 風格或逆轉配色) */
+        [data-theme="dark"] {
+            --bg-canvas: #0A0A0A;        /* 純黑底 */
+            --ink: #FFFFFF;             /* 純白 */
+            --white: #121212;           /* 深灰 */
+            
+            --accent-purple: #7C3AED;    /* 深紫 */
+            --accent-yellow: #D97706;    /* 深黃 */
+            --accent-red: #DC2626;       /* 深紅 */
+            --accent-teal: #0D9488;      /* 深藍綠 */
+            --accent-orange: #EA580C;    /* 深橘 */
+            
+            --border-thick: 4px solid #FFFFFF;
+            --border-thin: 2px solid #FFFFFF;
+            --shadow-offset: 8px 8px 0px 0px #FFFFFF;
+            --shadow-offset-sm: 4px 4px 0px 0px #FFFFFF;
+        }
+
+        /* 基礎重設 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            color: var(--ink);
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.4;
+            transition: background-color 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button, input, select {
+            outline: none;
+            background: none;
+            border: none;
+        }
+
+        /* 頁面頂部 Header */
+        header {
+            max-width: 1200px;
+            margin: 0 auto 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: var(--border-thick);
+            background-color: var(--white);
+            padding: 1.25rem 2rem;
+            box-shadow: var(--shadow-offset);
+        }
+
+        .header-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .header-logo i {
+            stroke-width: 3px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-theme {
+            border: var(--border-thin);
+            background-color: var(--accent-yellow);
+            padding: 0.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-offset-sm);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn-theme:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--ink);
+        }
+
+        .btn-theme:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px var(--ink);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Bento Grid 佈局 */
+        .bento-grid-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .bento-grid-top {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bento 卡片通用樣式 */
+        .bento-card {
+            border: var(--border-thick);
+            background-color: var(--white);
+            box-shadow: var(--shadow-offset);
+            padding: 2.5rem;
+            position: relative;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Pro Max 懸停動畫：Mechanical Press 機械按壓效果 */
+        .bento-card.interactive:hover {
+            transform: translate(8px, 8px);
+            box-shadow: 0px 0px 0px 0px var(--ink);
+        }
+
+        /* Bento 1: 個人資料卡片 (紫底) */
+        .profile-bento {
+            background-color: var(--accent-purple);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .profile-bento {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .avatar-frame {
+            border: var(--border-thick);
+            box-shadow: var(--shadow-offset-sm);
+            background-color: var(--white);
+            flex-shrink: 0;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .profile-badge {
+            background-color: var(--accent-yellow);
+            border: var(--border-thin);
+            padding: 0.2rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            align-self: flex-start;
+            box-shadow: var(--shadow-offset-sm);
+        }
+
+        @media (max-width: 600px) {
+            .profile-badge {
+                align-self: center;
+            }
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .profile-username {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-bottom: 2px solid var(--ink);
+            align-self: flex-start;
+            padding-bottom: 0.1rem;
+        }
+
+        @media (max-width: 600px) {
+            .profile-username {
+                align-self: center;
+            }
+        }
+
+        .profile-bio {
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Bento 2: 統計數據卡片 (黃底) */
+        .stats-bento {
+            background-color: var(--accent-yellow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            padding: 2rem;
+        }
+
+        .stat-box {
+            background-color: var(--white);
+            border: var(--border-thin);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-offset-sm);
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-txt {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Bento 3: 搜尋與過濾區塊 (紅底) */
+        .filter-bento {
+            background-color: var(--accent-red);
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-row {
+            display: flex;
+            border: var(--border-thick);
+            background-color: var(--white);
+            box-shadow: var(--shadow-offset-sm);
+        }
+
+        .search-icon-box {
+            background-color: var(--accent-orange);
+            border-right: var(--border-thick);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background-color: transparent;
+        }
+
+        .search-input::placeholder {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background-color: var(--white);
+            border: var(--border-thin);
+            padding: 0.4rem 0.8rem;
+            box-shadow: var(--shadow-offset-sm);
+        }
+
+        .pill-btn {
+            background-color: var(--white);
+            border: var(--border-thin);
+            padding: 0.4rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-offset-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .pill-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 3px 3px 0px 0px var(--ink);
+        }
+
+        .pill-btn.active {
+            background-color: var(--ink);
+            color: var(--bg-canvas);
+            box-shadow: none;
+            transform: translate(4px, 4px);
+        }
+
+        .pill-btn.active .lang-color-circle {
+            border-color: var(--bg-canvas);
+        }
+
+        .lang-color-circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid var(--ink);
+            display: inline-block;
+        }
+
+        /* 標題與排序列 */
+        .section-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: var(--border-thick);
+            background-color: var(--accent-teal);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-offset);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .sort-select-box {
+            border: var(--border-thin);
+            background-color: var(--white);
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-offset-sm);
+        }
+
+        /* 專案網格 */
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 500px) {
+            .repo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 儲存庫卡片 - 新粗獷主義風格 */
+        .repo-card {
+            background-color: var(--white);
+            border: var(--border-thick);
+            box-shadow: var(--shadow-offset);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+            position: relative;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* 懸停時 Mechanical Press 按壓下沉效果 */
+        .repo-card:hover {
+            transform: translate(8px, 8px);
+            box-shadow: 0px 0px 0px 0px var(--ink);
+        }
+
+        .repo-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .repo-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .repo-name {
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            word-break: break-all;
+            line-height: 1.1;
+        }
+
+        .repo-icon-wrap {
+            background-color: var(--accent-purple);
+            border: var(--border-thin);
+            padding: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .repo-description {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .repo-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            border-top: var(--border-thin);
+            padding-top: 1rem;
+        }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .repo-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .repo-meta-item i {
+            width: 14px;
+            height: 14px;
+            stroke-width: 2.5px;
+        }
+
+        .repo-btn {
+            background-color: var(--accent-orange);
+            border: var(--border-thin);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-offset-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .repo-card:hover .repo-btn {
+            background-color: var(--accent-yellow);
+        }
+
+        .repo-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 3px 3px 0px 0px var(--ink);
+        }
+
+        /* 新粗獷主義骨架屏 (Dotted Striped Skeleton) */
+        .skeleton-card {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(0, 0, 0, 0.05),
+                rgba(0, 0, 0, 0.05) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            background-color: var(--white);
+            border: var(--border-thick);
+            border-style: dashed;
+            padding: 2rem;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: skeleton-jump 1.5s infinite ease-in-out;
+        }
+
+        [data-theme="dark"] .skeleton-card {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.05) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+
+        @keyframes skeleton-jump {
+            0%, 100% {
+                transform: translate(0, 0);
+                box-shadow: var(--shadow-offset);
+            }
+            50% {
+                transform: translate(4px, 4px);
+                box-shadow: 4px 4px 0px 0px var(--ink);
+            }
+        }
+
+        .skeleton-line {
+            background-color: var(--ink);
+            opacity: 0.15;
+            height: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 錯誤訊息 / 無結果 */
+        .card-empty {
+            grid-column: 1 / -1;
+            border: var(--border-thick);
+            background-color: var(--accent-purple);
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-offset);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .card-empty-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .card-empty-desc {
+            font-size: 1.1rem;
+            font-weight: 500;
+            max-width: 500px;
+        }
+
+        /* 頁尾 */
+        footer {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            border: var(--border-thick);
+            background-color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-offset);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        footer p {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        .btn-reload {
+            background-color: var(--accent-teal);
+            border: var(--border-thin);
+            padding: 0.5rem 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: var(--shadow-offset-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-reload:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 3px 3px 0px 0px var(--ink);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頁首 Header -->
+    <header>
+        <div class="header-logo">
+            <i data-lucide="layout-grid"></i>
+            <span>PRO MAX PORTFOLIO</span>
+        </div>
+        <div class="header-controls">
+            <!-- 舊版/新版切換按鈕 -->
+            <a href="index.html" class="btn-theme" style="background-color: var(--accent-purple); font-weight:900; font-size:0.85rem; text-transform:uppercase; display:flex; align-items:center; gap:0.3rem;" title="切換回經典毛玻璃網頁">
+                <i data-lucide="sparkles" style="width:14px; height:14px;"></i> 經典版
+            </a>
+            <button class="btn-theme" id="theme-btn" title="切換新粗獷高對比主題">
+                <i data-lucide="moon" id="theme-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主體 Container -->
+    <main class="container">
+        
+        <!-- Bento 第一層: 個人資料 + 統計數據 -->
+        <section class="bento-grid-top">
+            <!-- Bento 1: 個人資料 (紫底) -->
+            <div class="bento-card profile-bento" id="profile-card">
+                <div class="avatar-frame">
+                    <div style="width:100%; height:100%; background-color:var(--white); border-style:dashed; border-width:2px; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="loader-2" class="animate-spin" style="width:30px; height:30px;"></i>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-badge">載入中...</div>
+                    <div class="skeleton-line" style="width: 200px; height: 2.2rem;"></div>
+                    <div class="skeleton-line" style="width: 120px;"></div>
+                    <div class="skeleton-line" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- Bento 2: 統計數據 (黃底) -->
+            <div class="bento-card stats-bento" id="stats-card">
+                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">倉庫</span></div>
+                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">粉絲</span></div>
+                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">追隨</span></div>
+                <div class="stat-box"><span class="stat-num">-</span><span class="stat-txt">GIST</span></div>
+            </div>
+        </section>
+
+        <!-- Bento 第二層: 搜尋與過濾 (紅底) -->
+        <section class="bento-card filter-bento">
+            <div class="search-row">
+                <div class="search-icon-box">
+                    <i data-lucide="search" style="stroke-width: 3px;"></i>
+                </div>
+                <input type="text" id="search-input" class="search-input" placeholder="輸入關鍵字即時檢索儲存庫..." disabled>
+            </div>
+            
+            <div class="filter-row" id="filters-container">
+                <span class="filter-label">篩選程式語言：</span>
+                <button class="pill-btn active" data-lang="all">全部專案</button>
+                <!-- 動態注入的程式語言按鈕 -->
+            </div>
+        </section>
+
+        <!-- 儲存庫標題列 -->
+        <section class="section-bar">
+            <h2 class="section-title">
+                <i data-lucide="folder-git-2" style="stroke-width: 3px;"></i>
+                <span>儲存庫專案目錄</span>
+            </h2>
+            <select id="sort-select" class="sort-select-box" disabled>
+                <option value="stars">依 Star 數降序</option>
+                <option value="updated">依最後更新時間</option>
+                <option value="name">依名稱 (A-Z)</option>
+            </select>
+        </section>
+
+        <!-- 儲存庫網格卡片區 -->
+        <section class="repo-grid" id="repo-grid">
+            <!-- 6 個新粗獷主義骨架屏卡片 -->
+            <div class="skeleton-card">
+                <div>
+                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
+                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
+                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
+                </div>
+                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
+            </div>
+            <div class="skeleton-card">
+                <div>
+                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
+                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
+                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
+                </div>
+                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
+            </div>
+            <div class="skeleton-card">
+                <div>
+                    <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
+                    <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                    <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
+                    <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
+                </div>
+                <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; <span id="year"></span> qwfwfiw1. 設計智庫支援：UI/UX PRO MAX.</p>
+        <button class="btn-reload" onclick="fetchGitHubData()">
+            <i data-lucide="refresh-cw"></i>手動重新整理
+        </button>
+    </footer>
+
+    <!-- 主控 JS 邏輯 -->
+    <script>
+        // 設定當前年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 目標 GitHub 使用者
+        const GITHUB_USERNAME = 'qwfwfiw1';
+
+        // 全域變數快取 API 資料
+        let cachedRepos = [];
+        let cachedProfile = {};
+        let activeLanguage = 'all';
+
+        // GitHub 官方語言色標 (高對比新粗獷風格專屬色標)
+        const LANGUAGE_COLORS = {
+            'JavaScript': '#f1e05a',
+            'TypeScript': '#3178c6',
+            'Python': '#3572A5',
+            'HTML': '#FF6B6B',
+            'CSS': '#C4B5FD',
+            'Go': '#86CCCA',
+            'Java': '#FFA366',
+            'C++': '#FF8888',
+            'C#': '#86EFAC',
+            'Ruby': '#EF4444',
+            'Shell': '#84CC16',
+            'Vue': '#10B981',
+            'PHP': '#8B5CF6',
+            'Rust': '#F97316'
+        };
+
+        // 深淺色主題切換控制
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // 優先從 localStorage 取得主題，否則使用系統預設
+        const savedTheme = localStorage.getItem('theme-neobrutal');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.setAttribute('data-lucide', 'moon');
+        }
+        lucide.createIcons(); // 更新圖示
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') {
+                newTheme = 'dark';
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            
+            localStorage.setItem('theme-neobrutal', newTheme);
+            lucide.createIcons(); // 更新圖示
+        });
+
+        // 初始化載入 GitHub 資料
+        async function fetchGitHubData() {
+            showSkeletons();
+            try {
+                // 1. 同步獲取 Profile 和 Repos
+                const [profileRes, reposRes] = await Promise.all([
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+                    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
+                ]);
+
+                if (!profileRes.ok || !reposRes.ok) {
+                    throw new Error('無法獲取 API，可能已達 API rate limit，請稍候重試！');
+                }
+
+                cachedProfile = await profileRes.json();
+                cachedRepos = await reposRes.json();
+
+                // 2. 渲染頁面
+                renderProfile(cachedProfile);
+                renderRepos();
+                renderLanguageFilters();
+
+                // 3. 啟用搜尋輸入框與排序選單
+                document.getElementById('search-input').removeAttribute('disabled');
+                document.getElementById('sort-select').removeAttribute('disabled');
+
+            } catch (error) {
+                console.error(error);
+                renderError(error.message);
+            }
+        }
+
+        // 顯示骨架屏
+        function showSkeletons() {
+            document.getElementById('repo-grid').innerHTML = Array(6).fill(`
+                <div class="skeleton-card">
+                    <div>
+                        <div class="skeleton-line" style="width: 70%; height: 1.5rem;"></div>
+                        <div class="skeleton-line" style="width: 100%; height: 0.9rem; margin-top: 1rem;"></div>
+                        <div class="skeleton-line" style="width: 90%; height: 0.9rem;"></div>
+                        <div class="skeleton-line" style="width: 60%; height: 0.9rem;"></div>
+                    </div>
+                    <div class="skeleton-line" style="width: 100px; height: 1.5rem; margin-bottom: 0;"></div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染個人資料卡片
+        function renderProfile(profile) {
+            const profileCard = document.getElementById('profile-card');
+            
+            profileCard.innerHTML = `
+                <div class="avatar-frame">
+                    <img src="${profile.avatar_url}" alt="${profile.name || profile.login}" class="avatar-img">
+                </div>
+                <div class="profile-details">
+                    <div class="profile-badge">GITHUB PRO MAX</div>
+                    <h1 class="profile-name">${profile.name || profile.login}</h1>
+                    <a href="${profile.html_url}" target="_blank" class="profile-username">
+                        <i data-lucide="github" style="width:18px; height:18px; stroke-width: 3px;"></i>
+                        <span>@${profile.login}</span>
+                    </a>
+                    <p class="profile-bio">${profile.bio || '這位工程師目前沒有留下任何說明。'}</p>
+                </div>
+            `;
+
+            // 統計數據
+            const statsCard = document.getElementById('stats-card');
+            statsCard.innerHTML = `
+                <div class="stat-box"><span class="stat-num">${profile.public_repos}</span><span class="stat-txt">倉庫</span></div>
+                <div class="stat-box"><span class="stat-num">${profile.followers}</span><span class="stat-txt">粉絲</span></div>
+                <div class="stat-box"><span class="stat-num">${profile.following}</span><span class="stat-txt">追隨</span></div>
+                <div class="stat-box"><span class="stat-num">${profile.public_gists}</span><span class="stat-txt">GIST</span></div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        // 渲染程式語言篩選按鈕
+        function renderLanguageFilters() {
+            const filtersContainer = document.getElementById('filters-container');
+            
+            // 統計所有不重複的語言
+            const languages = new Set();
+            cachedRepos.forEach(repo => {
+                if (repo.language) {
+                    languages.add(repo.language);
+                }
+            });
+
+            // 清空除「全部」之外的標籤
+            filtersContainer.innerHTML = `<span class="filter-label">篩選程式語言：</span>
+                <button class="pill-btn active" data-lang="all">全部專案</button>`;
+
+            // 動態添加語言標籤
+            languages.forEach(lang => {
+                const color = LANGUAGE_COLORS[lang] || '#000000';
+                const btn = document.createElement('button');
+                btn.className = 'pill-btn';
+                btn.setAttribute('data-lang', lang);
+                btn.innerHTML = `<span class="lang-color-circle" style="background-color: ${color}"></span>${lang}`;
+                filtersContainer.appendChild(btn);
+            });
+
+            // 綁定點擊事件
+            const pills = document.querySelectorAll('.pill-btn');
+            pills.forEach(pill => {
+                pill.addEventListener('click', (e) => {
+                    pills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    activeLanguage = pill.getAttribute('data-lang');
+                    renderRepos();
+                });
+            });
+        }
+
+        // 渲染儲存庫網格卡片
+        function renderRepos() {
+            const repoGrid = document.getElementById('repo-grid');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const sortVal = document.getElementById('sort-select').value;
+
+            // 1. 篩選
+            let filteredRepos = cachedRepos.filter(repo => {
+                const matchesLanguage = activeLanguage === 'all' || repo.language === activeLanguage;
+                const matchesSearch = repo.name.toLowerCase().includes(searchVal) || 
+                                     (repo.description && repo.description.toLowerCase().includes(searchVal));
+                return matchesLanguage && matchesSearch;
+            });
+
+            // 2. 排序
+            if (sortVal === 'stars') {
+                filteredRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+            } else if (sortVal === 'updated') {
+                filteredRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+            } else if (sortVal === 'name') {
+                filteredRepos.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            // 3. 渲染 HTML
+            if (filteredRepos.length === 0) {
+                repoGrid.innerHTML = `
+                    <div class="card-empty">
+                        <i data-lucide="folder-search" style="width:64px; height:64px; stroke-width: 3px;"></i>
+                        <h3 class="card-empty-title">檢索無結果</h3>
+                        <p class="card-empty-desc">沒有找到與關鍵字或程式語言相符的專案儲存庫，請變更搜尋條件！</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            repoGrid.innerHTML = '';
+            filteredRepos.forEach((repo, index) => {
+                const color = LANGUAGE_COLORS[repo.language] || '#D1D5DB';
+                const card = document.createElement('article');
+                card.className = 'repo-card';
+
+                card.innerHTML = `
+                    <div class="repo-top">
+                        <div class="repo-title-row">
+                            <h3 class="repo-name">${repo.name}</h3>
+                            <div class="repo-icon-wrap">
+                                <i data-lucide="folder" style="width:18px; height:18px; stroke-width: 3px;"></i>
+                            </div>
+                        </div>
+                        <p class="repo-description" title="${repo.description || '這個專案尚未提供詳細的說明與描述。'}">
+                            ${repo.description || '這個專案尚未提供詳細的說明與描述。'}
+                        </p>
+                    </div>
+                    <div class="repo-bottom">
+                        <div class="repo-meta">
+                            ${repo.language ? `
+                                <div class="repo-meta-item">
+                                    <span class="lang-color-circle" style="background-color: ${color}"></span>
+                                    <span>${repo.language}</span>
+                                </div>
+                            ` : ''}
+                            <div class="repo-meta-item" title="${repo.stargazers_count} Stars">
+                                <i data-lucide="star"></i>
+                                <span>${repo.stargazers_count}</span>
+                            </div>
+                            <div class="repo-meta-item" title="${repo.forks_count} Forks">
+                                <i data-lucide="git-fork"></i>
+                                <span>${repo.forks_count}</span>
+                            </div>
+                        </div>
+                        <a href="${repo.html_url}" target="_blank" class="repo-btn">
+                            <span>進入</span>
+                            <i data-lucide="arrow-up-right" style="width: 14px; height: 14px; stroke-width:3px;"></i>
+                        </a>
+                    </div>
+                `;
+                repoGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // 渲染 API 錯誤訊息頁面
+        function renderError(message) {
+            const container = document.querySelector('main');
+            container.innerHTML = `
+                <div class="card-empty">
+                    <i data-lucide="alert-triangle" style="width: 64px; height: 64px; stroke-width: 3px;"></i>
+                    <h2 class="card-empty-title">無法獲取 API 資料</h2>
+                    <p class="card-empty-desc">
+                        ${message}<br><br>
+                        如果您已經達到 GitHub API 限制，請稍候重試。或者直接造訪下方連結進入 GitHub 主頁。
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; justify-content: center;">
+                        <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" class="repo-btn" style="background-color: var(--accent-yellow); font-size:1rem; padding: 0.6rem 1.5rem;">
+                            <i data-lucide="github"></i>造訪 GitHub
+                        </a>
+                        <button class="repo-btn" onclick="location.reload()" style="background-color: var(--accent-teal); font-size:1rem; padding: 0.6rem 1.5rem;">
+                            <i data-lucide="refresh-cw"></i>重新嘗試
+                        </button>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // 綁定事件監聽器
+        document.getElementById('search-input').addEventListener('input', renderRepos);
+        document.getElementById('sort-select').addEventListener('change', renderRepos);
+
+        // 啟動執行
+        fetchGitHubData();
+    </script>
+</body>
+</html>
